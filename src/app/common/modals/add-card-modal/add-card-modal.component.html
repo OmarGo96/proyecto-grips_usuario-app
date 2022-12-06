@@ -1,0 +1,169 @@
+<ngx-spinner name="loaderNgxModal"><p style="color: white;font-size: 0.9rem;font-weight: 500;">{{generalServ.ngxLoaderMsg ? generalServ.ngxLoaderMsg : ' Loading...'}}</p></ngx-spinner>
+
+<div mat-dialog-title>
+  <h5>Agregar nueva tarjeta</h5>
+  <button mat-icon-button class="btn-close" (click)="dismiss()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <ion-row style="height: 100%; align-content: center; justify-content: center">
+    <ion-col size="12" style="height: 90%">
+      <ng-container>
+        <form [formGroup]="cardForm" autocomplete="off">
+          <ion-row>
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>Nombre tarjeta</mat-label>
+                <input matInput type="text" formControlName="c_name" autocomplete="off">
+                <mat-error>Campo requerido</mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row> <!-- c_name, c_type-->
+          <h4 style="padding: 0; color: var(--ion-color-medium)">Números de Tarjeta
+            &nbsp; <mat-icon style="vertical-align: bottom">credit_card</mat-icon>
+          </h4>
+          <ion-row class="card-numbers">
+            <ion-col size="2" size-md="2">
+              <mat-form-field appearance="legacy">
+                <input matInput formControlName="c_cn1" id="c_cn1" type="text"  style="-webkit-text-security: disc;" inputmode="numeric" pattern="[0-9]*"
+                       [maxLength]="(cardConfig && cardConfig.l1) ? cardConfig.l1 : 4"
+                       (keyup)="keytab($event, (cardConfig && cardConfig.l1) ? cardConfig.l1 : 4)" autocomplete="off">
+                <mat-error *ngIf="cardForm.controls['c_cn1'].errors?.required">Campo requerido.
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_cn1'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="2" size-md="2">
+              <mat-form-field appearance="legacy">
+                <mat-label></mat-label>
+                <input matInput formControlName="c_cn2" id="c_cn2" type="text" style="-webkit-text-security: disc;" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                       [maxLength]="(cardConfig && cardConfig.l2) ? cardConfig.l2 : 4"
+                       (keyup)="keytab($event, (cardConfig && cardConfig.l2) ? cardConfig.l2 : 4)">
+                <mat-error *ngIf="cardForm.controls['c_cn2'].errors?.required">Campo requerido
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_cn2'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="2" size-md="2">
+              <mat-form-field appearance="legacy">
+                <mat-label></mat-label>
+                <input matInput formControlName="c_cn3" id="c_cn3" type="text" style="-webkit-text-security: disc;" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                       [maxLength]="(cardConfig && cardConfig.l3) ? cardConfig.l3 : 4"
+                       (keyup)="keytab($event, (cardConfig && cardConfig.l3) ? cardConfig.l3 : 4)">
+                <mat-error *ngIf="cardForm.controls['c_cn3'].errors?.required">Campo requerido
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_cn3'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="2" size-md="2">
+              <mat-form-field appearance="legacy">
+                <mat-label></mat-label>
+                <input matInput formControlName="c_cn4" id="c_cn4" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                       [maxLength]="(cardConfig && cardConfig.l4) ? cardConfig.l4 : 4"
+                       (keyup)="keytab($event, (cardConfig && cardConfig.l4) ? cardConfig.l4 : 4)">
+                <mat-error *ngIf="cardForm.controls['c_cn4'].errors?.required">Campo requerido.
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_cn4'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+
+            <ion-col size="4" size-md="4" style="position: relative; left: 10px;">
+              <mat-form-field appearance="legacy" class="c_type" [ngClass]="{'c_type_value': cardForm.controls['c_type'].value}">
+                <mat-select formControlName="c_type" (selectionChange)="changeInputMax($event.value)">
+                  <mat-select-trigger style="position: relative">
+                    <ion-icon style="position: absolute;" class="{{cardConfig?.icon}}-icon" src="assets/img/static/card-brands/{{cardConfig?.icon}}.svg"></ion-icon>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let cards of cardConf" value="{{cards.desc}}">{{cards.desc}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="cardForm.controls['c_type'].errors?.required">Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row> <!-- c_cn1, c_cn2, c_cn3, c_cn4 -->
+
+          <ion-row>
+            <ion-col size="4">
+              <mat-form-field appearance="legacy">
+                <mat-label>Mes</mat-label>
+                <mat-select formControlName="c_month">
+                  <mat-option *ngFor="let month of months" value="{{month.digit}}">{{month.month}}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>date_range</mat-icon>
+                <mat-error *ngIf="cardForm.controls['c_month'].errors?.required">Campo requerido
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_month'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="4">
+              <mat-form-field appearance="legacy">
+                <mat-label>Año</mat-label>
+                <mat-select formControlName="c_year">
+                  <mat-option *ngFor="let year of validYears" value="{{year}}">{{year}}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>date_range</mat-icon>
+                <mat-error *ngIf="cardForm.controls['c_year'].errors?.required">Campo requerido.
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_year'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="4">
+              <mat-form-field appearance="legacy">
+                <mat-label>CCV</mat-label>
+                <input matInput formControlName="c_code" type="text" style="-webkit-text-security: disc;" inputmode="numeric" pattern="[0-9]*" autocomplete="off"
+                       [maxLength]="(cardConfig && cardConfig.lv) ? cardConfig.lv : 4">
+
+                <mat-icon matSuffix>call_to_action</mat-icon>
+                <mat-error *ngIf="cardForm.controls['c_code'].errors?.required">Campo requerido.
+                </mat-error>
+                <mat-error *ngIf="cardForm.controls['c_code'].errors?.pattern">Solo
+                  <strong>números</strong> están permitidos.
+                </mat-error>
+
+              </mat-form-field>
+            </ion-col>
+          </ion-row> <!-- c_month, c_year, c_code-->
+
+          <hr>
+
+          <ion-row *ngIf="needCaptureAmount">
+            <ion-col size>
+              <mat-form-field appearance="legacy">
+                <mat-label>Aprobación Banco</mat-label>
+                <input type="text" matInput formControlName="cod_banco">
+                <mat-error *ngIf="cardForm.controls['cod_banco'].errors?.required">Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size>
+              <mat-form-field appearance="legacy">
+                <mat-label>Monto cobrado</mat-label>
+                <input type="number" matInput formControlName="monto">
+                <mat-error *ngIf="cardForm.controls['monto'].errors?.required">Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </form> <!-- cardForm-->
+      </ng-container> <!-- card form and payment form-->
+    </ion-col>
+    <ion-col size="12" class="ion-text-center">
+      <button mat-raised-button class="button-secondary" style="width: 50%;" (click)="saveUpdate()">
+        AGREGAR
+      </button>
+    </ion-col>
+  </ion-row>
+</mat-dialog-content>

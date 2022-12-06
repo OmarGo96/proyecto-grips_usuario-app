@@ -1,0 +1,8 @@
+{
+  "name": "Grip´s App",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

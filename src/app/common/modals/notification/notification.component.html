@@ -1,0 +1,27 @@
+<ion-content style="position: relative;">
+  <div class="notification-wrapper">
+    <ion-row class="header-container">
+    </ion-row>
+    <ion-row style="margin-top: 5px;">
+      <ion-col size="1" style="display: flex; justify-content: center;">
+        <img src="assets/img/static/notification.svg" alt="notification svg" style="height: 50px;">
+      </ion-col>
+      <ion-col size="11">
+        <div class="notification-container">
+          <p class="notification-title">{{ notification.title }}</p>
+          <p class="notification-body">
+            {{ notification.body }}
+          </p>
+        </div>
+      </ion-col>
+      <div  class="notification-link">
+        <div *ngIf="notification && notification.data">
+          <ion-button size="small" color="secondary" (click)="moreDetails()">Mas detalles</ion-button>
+        </div>
+        <ion-button size="small" color="light" (click)="dismiss()">Cerrar</ion-button>
+      </div>
+    </ion-row>
+  </div>
+</ion-content>
+
+

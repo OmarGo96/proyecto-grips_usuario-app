@@ -1,0 +1,16 @@
+<app-page-toolbar-title></app-page-toolbar-title>
+
+<ion-content>
+
+  <ion-row style="align-content: center; justify-content: center;">
+    <ion-col size="11" size-md="8">
+      <div class="title-container">
+        <p class="title">Detalles de la pre-solicitud # {{(preSolData && preSolData.pre_sol_id) ? preSolData.pre_sol_id : '--'}}</p>
+      </div>
+
+
+    </ion-col>
+  </ion-row>
+  <app-service-details *ngIf="preSolData" [asModal]="false" [data]="preSolData"></app-service-details>
+
+</ion-content>

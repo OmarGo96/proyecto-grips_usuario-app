@@ -1,0 +1,20 @@
+<ion-app>
+  <ngx-spinner name="loaderNgx"><p style="color: white;font-size: 0.9rem;font-weight: 500;">{{generalServ.ngxLoaderMsg ? generalServ.ngxLoaderMsg : ' Loading...'}}</p></ngx-spinner>
+  <ion-router-outlet [ngClass]="{hide: (generalServ.netWorkStatus$ | async) === false}"></ion-router-outlet>
+
+  <div class="no-internet" *ngIf="(generalServ.netWorkStatus$ | async) === false">
+    <h2>No hay conexión a internet</h2>
+    <mat-icon>wifi_off</mat-icon>
+    <mat-icon>sentiment_dissatisfied</mat-icon>
+  </div>
+
+  <ion-fab class="help-button" vertical="top" horizontal="end" slot="fixed"  *ngIf="generalServ.activeHelpBtn">
+    <ion-fab-button size="small" style="--color: white;" (click)="generalServ.showHelp()">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="app-version" *ngIf="appVersion && sessionServ.isLogged()">
+    {{ appVersion }}
+  </div>
+</ion-app>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="59.458" height="65.626" viewBox="0 0 59.458 65.626">
+  <defs>
+    <filter id="Trazado_257" x="0" y="0" width="59.458" height="65.626" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.51"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Componente_21_1" data-name="Componente 21 – 1" transform="translate(9 5)">
+    <ellipse id="Elipse_25" data-name="Elipse 25" cx="8.201" cy="3.519" rx="8.201" ry="3.519" transform="translate(12.447 48.962)" fill="#868686"/>
+    <g transform="matrix(1, 0, 0, 1, -9, -5)" filter="url(#Trazado_257)">
+      <path id="Trazado_257-2" data-name="Trazado 257" d="M20.729,0A20.961,20.961,0,0,1,41.458,21.185c0,11.7-17.72,26.373-20.729,26.442S0,32.884,0,21.185A20.961,20.961,0,0,1,20.729,0Z" transform="translate(9 5)" fill="#224f72"/>
+    </g>
+    <g id="Grupo_107" data-name="Grupo 107" transform="translate(5.576 11.285)">
+      <path id="Trazado_18" data-name="Trazado 18" d="M76.883,133.43l1.175-.108.087,1.955-1.28-.046.016-1.8Zm8.237-1.92c-.065-.913.8-1.3,1.306-1.924.638-.793.574-1.179,2.08-1.179l3.475.06c.474.679.268,2.263.134,3.059l-7-.015Zm-8.908,4.039c4.09.54,4.008-1.022,6.122-.042a3.411,3.411,0,0,1,1.907,2.46l12.411.02c.846-3.757,6.319-3.682,6.927.008,2.957-.029,2.8.429,2.83-2.928a18.58,18.58,0,0,0-2.063-1.185c-1.329-.714-1.217-.65-3.053-.637-2.352.017-4.95.083-7.279-.015a43.018,43.018,0,0,1-.044-4.723c-.047-1.4.539-1.033-5.909-1.033-1.079,0-1.182.063-1.789.625-6.362,5.9-4.05,2.374-8.453,4.215-1.417.593-2.073.739-1.606,3.234Z" transform="translate(-76.064 -123.855)" fill="#fff" fill-rule="evenodd"/>
+      <path id="Trazado_19" data-name="Trazado 19" d="M181.31,111.83l5.06.022c.192-1.5-.183-.463-.463-1.492l3.3-4.542-.248,3.048c-.169.437-.67.57-.586,1.629.154,1.97,2.569,2.3,2.928-.234-1.716.155-.289.828-1.843.825-.859-1.325.066-.893.526-2.4.279-.911-.089.9.082-.317.1-.748-.312-.616-.242-2.641.049-1.447.509-.939.36-2.543-1.786-.64-2.272.325-3,1.207a10.556,10.556,0,0,1-.977,1.138,9.211,9.211,0,0,0-1.144,1.144c-1.615,1.932-3.816,3.56-3.754,5.155Z" transform="translate(-162.187 -102.981)" fill="#fff" fill-rule="evenodd"/>
+      <path id="Trazado_20" data-name="Trazado 20" d="M200.206,184.247c-2.347.716-2.772-1.341-1.927-2.087C199.26,181.294,201.344,182.07,200.206,184.247Zm-1.741-3.531a2.59,2.59,0,1,0,1.722,4.881A2.59,2.59,0,0,0,198.465,180.716Z" transform="translate(-175.07 -169.021)" fill="#fff" fill-rule="evenodd"/>
+      <path id="Trazado_21" data-name="Trazado 21" d="M89.579,181.862c2-.83,2.532,2.043,1.15,2.583a1.386,1.386,0,0,1-1.926-.722A1.3,1.3,0,0,1,89.579,181.862Zm-.22-1.182c-3.226,1.105-1.627,5.994,1.567,4.926C93.946,184.6,92.522,179.6,89.359,180.68Z" transform="translate(-85.123 -168.985)" fill="#fff" fill-rule="evenodd"/>
+      <path id="Trazado_22" data-name="Trazado 22" d="M73.49,184.013l-2.64,0c.018,1.1.277,1.97,1.315,2.086C73.07,186.2,73.31,184.813,73.49,184.013Z" transform="translate(-70.729 -171.881)" fill="#fff" fill-rule="evenodd"/>
+      <path id="Trazado_23" data-name="Trazado 23" d="M152.639,117.345l-.029.767c.7.431,1.385.263,2.383.263l-.008-1.03-1.661-.194c-.622.077.28-.086-.359.066Z" transform="translate(-139.05 -114.94)" fill="#fff" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>

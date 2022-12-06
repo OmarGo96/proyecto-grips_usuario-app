@@ -1,0 +1,77 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Detalle de notificación</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss(false)">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <fieldset class="identificador-noti-container">
+    <legend>Identificador Notificaciones</legend>
+    <div class="indentificador-noti">
+      <ion-icon name="ellipse" style="color: var(--noti-normal-color)"></ion-icon> Normal
+      <ion-icon name="ellipse" style="color: var(--noti-important-color)"></ion-icon> Importante
+      <ion-icon name="ellipse" style="color: var(--noti-urgent-color)"></ion-icon> Urgente
+    </div>
+  </fieldset>
+
+  <div class="reminder-container">
+    <ion-row class="ion-justify-content-end">
+      <ion-col size="10" class="ion-no-margin ion-no-padding">
+        <app-timecounter-bar *ngIf="notification.pre_sol && notification.pre_sol.fecha_hora_extension" [dateToCompare]="dateConv.transFormDate(notification.pre_sol.fecha_hora_extension, 'localTimeMoment')"></app-timecounter-bar>
+      </ion-col>
+    </ion-row>
+    <ion-grid class="grid-container">
+      <ion-row>
+        <ion-col size="2">
+          <ion-avatar>
+            <img src="assets/img/static/notification.svg">
+          </ion-avatar>
+
+        </ion-col>
+        <ion-col size="10">
+          <div class="notification-title">
+            <h5 *ngIf="notification.status === 0"><ion-icon name="ellipse" [ngClass]="{'general-indicator': notification.priority === 1, 'important-indicator': notification.priority === 2, 'urgent-indicator': notification.priority === 3}"></ion-icon></h5>
+            <h5 *ngIf="notification.status === 1"><ion-icon name="checkmark-done-sharp" [ngClass]="{'general-indicator': notification.priority === 1, 'important-indicator': notification.priority === 2, 'urgent-indicator': notification.priority === 3}"></ion-icon> </h5>
+            <h5>{{ notification.date_reg }}</h5>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <p>{{ notification.body }}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-no-margin ion-no-padding ion-justify-content-between" style="flex-wrap: initial;" >
+        <ion-col size="6" size-md="4" class="ion-no-padding ion-no-margin" *ngIf="notification.model && notification.model === 'cms_pre_solicitudes' && (notification.pre_sol && notification.pre_sol.status == 2)">
+          <ion-button expand="block" style="width: 100%" class="ion-succes-btn ion-no-margin ion-no-padding" (click)="acceptService()">
+            Aceptar Servicio
+          </ion-button>
+        </ion-col>
+        &nbsp;
+        <ion-col size="6" size-md="4" class="ion-no-padding ion-no-margin" >
+          <ion-button *ngIf="notification.model && notification.model === 'cms_pre_solicitudes'" expand="block" color="secondary" style="width: 100%;" class="ion-no-margin ion-no-padding" [routerLink]="['/partners/cms_pre_solicitudes/', notification.model_id]" (click)="dismiss(false);">
+            Ver mas detalles
+          </ion-button>
+          <ion-button *ngIf="notification.model && notification.model === 'cms_padsolicitudes'" expand="block" color="secondary" style="width: 100%;" class="ion-no-margin ion-no-padding" [routerLink]="['/partners/servicios/', notification.model_id]" (click)="dismiss(false);">
+            Ver mas detalles
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div> <!-- notification reminder -->
+</ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col>
+      <ion-button fill="outline" style="width: 100%;" (click)="dismiss(false)">Cerrar</ion-button>
+    </ion-col>
+    <ion-col *ngIf="notification.status === 1">
+      <ion-button color="secondary" style="width: 100%;" (click)="putNotiRead(notification.id)">Marcar como leido</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

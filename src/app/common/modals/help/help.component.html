@@ -1,0 +1,94 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card class="app-card">
+    <ion-card-content>
+      <ion-row style="height: 100%; align-content: center; justify-content: center">
+        <ion-col size="12" style="height: 90%">
+          <div class="help-container">
+            <h2>{{ helpTitle }}</h2>
+            <img src="assets/img/static/asistencia/apoyo.svg" alt="apoyo svg" style="width: 100px;margin: 1rem;">
+            <p style="flex: 1; text-align: center">
+              Puedes ponerte en contacto con nosotros a través de una llamada o whatsapp.
+            </p>
+            <p>Nuestro número: {{ contactPhone }}</p>
+            <div class="dailing-container">
+              <div class="phone circle-shadow call">
+                <a href="tel:{{ contactPhone }}">
+                  <ion-icon name="call-outline"></ion-icon>
+                </a>
+              </div>
+
+              <div class="phone circle-shadow whats">
+                <a
+                  href="{{ whatsAppInput }}">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12" size-md="8">
+
+          <div class="help-container">
+            <p style="flex: 1; text-align: center">
+              También puedes programar una llamada para que te contactemos
+            </p>
+
+            <ion-img src="assets/img/static/click-here.svg" style="transform: rotate(180deg); width: 50px;"></ion-img>
+            <ion-button color="secondary" (click)="showCallForm()" size="small">
+              <ion-icon slot="icon-only" *ngIf="callMe === false" name="chevron-down-outline"></ion-icon>
+              <ion-icon slot="icon-only" *ngIf="callMe === true" name="chevron-up-outline"></ion-icon>
+            </ion-button>
+          </div>
+
+          <form [formGroup]="callForm" *ngIf="callMe === true">
+            <div class="form-content">
+              <mat-form-field appearance="legacy">
+                <mat-label>Teléfono*</mat-label>
+                <input type="tel" matInput formControlName="telefono" inputmode="numeric" class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="cf.telefono.errors?.required">Campo requerido</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="legacy">
+                <mat-label>Fecha y Hora*</mat-label>
+                <input type="datetime-local" matInput formControlName="fechahoraprogramada" class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="cf.fechahoraprogramada.errors?.required">Campo requerido</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="legacy">
+                <mat-label>Comentario*</mat-label>
+                <textarea matInput formControlName="comment"></textarea>
+                <mat-error *ngIf="cf.comment.errors?.required">Campo requerido</mat-error>
+              </mat-form-field>
+
+              <div class="spinner" *ngIf="spinner === true">
+                <ion-spinner></ion-spinner>
+              </div>
+
+              <ion-button *ngIf="spinner === false" (click)="programCall()" expand="block" color="secondary"  shape="round">
+                Solicitar Llamada
+              </ion-button>
+            </div>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

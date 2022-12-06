@@ -1,0 +1,96 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+
+  <ion-card>
+    <ion-card-content class="ion-no-padding ion-no-margin">
+      <p class="pay-title">Total a pagar</p>
+      <p class="to-pay">{{totalToPay | currency}} {{currency}}</p>
+
+      <mat-divider></mat-divider>
+
+      <ng-container *ngIf="!cardsClient && cardsLoader === false; else otherSelectCardTxt">
+        <p class="select-card ion-text-center">No tienes tarjetas asociadas a tu cuenta.</p>
+      </ng-container>
+      <ng-template #otherSelectCardTxt>
+        <p class="select-card">{{(cardsLoader === false) ? 'Tus tarjetas' : 'Cargando tarjetas ...'}}</p>
+      </ng-template>
+
+
+      <div class="spinner fix-height" *ngIf="cardsLoader === true">
+        <ion-spinner color="secondary" name="dots" ></ion-spinner>
+      </div>
+
+      <ion-slides *ngIf="cardsLoader === false && (cardsClient && cardsClient.length > 0)" style="padding-bottom: 2rem" pager=true [options]="slideOptions" #slideWithNav1
+                  (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav1, $event)">
+
+        <ion-slide *ngFor="let card of cardsClient; let i = index">
+          <div class="credit-card-container" [ngClass]="[card.brand ? card.brand : 'generic', (selectedCard && selectedCard.token == card.token) ? 'selected-card': '']">
+<!--            <ion-icon name="checkmark-circle-sharp" color="success"></ion-icon>-->
+            <div class="card-brand">
+              <ion-icon *ngIf="card.brand" src="assets/img/static/card-brands/{{card.brand}}.svg" alt="visa-brand"></ion-icon>
+              <ion-icon *ngIf="!card.brand" src="assets/img/static/card-brands/generic.svg" alt="visa-brand"></ion-icon>
+            </div>
+            <div class="card-numbers">
+              <ion-row>
+                <ion-col size="3" class="ion-no-margin ion-no-padding ion-text-center">
+                  <p class="card-number">****</p>
+                </ion-col>
+                <ion-col size="3" class="ion-no-margin ion-no-padding ion-text-center">
+                  <p class="card-number">****</p>
+                </ion-col>
+                <ion-col size="3" class="ion-no-margin ion-no-padding ion-text-center">
+                  <p class="card-number">****</p>
+                </ion-col>
+                <ion-col size="3" class="ion-no-margin ion-no-padding ion-text-center">
+                  <p class="card-number">{{card.card_number.substr(card.card_number.length - 4)}}</p>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div class="card-name-exp">
+              <ion-row>
+                <ion-col size="12" class="ion-no-padding ion-no-margin">
+                  <p class="holder-name">{{card.holder_name}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-margin-top">
+                <ion-col size="6" class="ion-no-padding ion-no-margin ion-text-left">
+                  <p>Banco: {{card.bank_name}}</p>
+                </ion-col>
+                <ion-col size="6"  class="ion-no-padding ion-no-margin ion-text-right">
+                  <p>Tipo: {{card.type | titlecase}}</p>
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+
+<!--      <p class="enter-cvv" *ngIf="selectedCard">-->
+<!--        Ingresar CVV-->
+<!--        <mat-form-field appearance="fill">-->
+<!--          <input type="number" matInput [(ngModel)]="selectedCard.c_code">-->
+<!--        </mat-form-field>-->
+<!--      </p>-->
+      <div class="pay-buttons-opts" *ngIf="cardsLoader === false">
+        <ng-container *ngIf="selectedCard">
+          <button mat-raised-button class="button-secondary pay-button" (click)="payNow()">Pagar con tarjeta | Term. <b>{{selectedCard.card_number.substr(selectedCard.card_number.length - 4)}}</b></button>
+          <p style="margin-top: 12px;margin-bottom: 12px;">o</p>
+        </ng-container>
+        <button mat-icon-button class="other-card" (click)="openAddCard()">
+          <mat-icon>add_circle_outline</mat-icon>&nbsp; <span>Agregar nueva tarjeta</span>
+        </button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

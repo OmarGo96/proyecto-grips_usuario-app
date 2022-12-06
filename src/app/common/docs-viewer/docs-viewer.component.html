@@ -1,0 +1,28 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title></ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <div style="height: 100%; width: auto;" *ngIf="document; else noPDF">
+    <ng2-pdfjs-viewer
+        #pdfViewer
+        [pdfSrc]="document.docURL"
+        [useOnlyCssZoom]="true"
+        viewerId="doc1234"
+    >
+    </ng2-pdfjs-viewer>
+  </div>
+
+  <ng-template #noPDF>
+    No hay documento para mostrar
+  </ng-template>
+
+</ion-content>

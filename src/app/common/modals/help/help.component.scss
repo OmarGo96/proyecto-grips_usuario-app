@@ -1,0 +1,42 @@
+.help-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5em;
+  flex-direction: column;
+  h2 {
+    text-align: center;
+  }
+}
+.dailing-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.phone {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  border-radius: 50%;
+  width: 50px;
+  margin: 0 auto;
+  align-items: center;
+  &.call {
+    background-color: #2778c4;
+  }
+  &.whats {
+    background-color: #008c56;
+  }
+  ion-icon {
+    font-size: 2rem;
+    vertical-align: middle;
+  }
+}
+
+ion-icon[name="call-outline"] {
+  color: white;
+}
+ion-icon[name="logo-whatsapp"] {
+  color: white;
+}

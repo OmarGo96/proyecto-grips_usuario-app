@@ -1,0 +1,40 @@
+<ion-row>
+  <ion-col size="12" *ngIf="loadData === true">
+    <div class="spinner">
+      <b style="color: var(--app-secondary); width: 100%;">Cargando información</b>
+      <br>
+      <ion-spinner color="secondary" name="dots"></ion-spinner>
+    </div>
+  </ion-col>
+
+  <ng-container *ngIf="loadData === false">
+    <ion-col size="12" class="ion-text-center" *ngIf="vehiculos && vehiculos.length == 0">
+      <h3 style="color: var(--app-secondary); width: 100%; text-align: center; margin-top: 0.5rem; font-weight: 500;">No tiene vehículos registrados aún.</h3>
+      <ion-button class="add-button" (click)="showRegister()" shape="round" size="small" color="primary" *ngIf="makeSolicitud === true">
+        <ion-icon name="add"></ion-icon>
+        Agregar vehículo
+      </ion-button>
+    </ion-col>
+  </ng-container>
+</ion-row>
+
+<ion-slides pager="true" [options]="slideOptions" #slideWithNav
+  (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav, $event)" [ngClass]="{'hide': loadData === true}">
+  <ion-slide *ngFor="let vehiculo of vehiculos">
+    <div class="vehiculo-container">
+      <div class="vehiculo-img circle-shadow" [ngClass]="{'active-vehiculo': selectedVehiculo === vehiculo}" (click)="pickVehiculo(vehiculo)">
+        <ion-icon *ngIf="vehiculo.tipo.icon_name" src="assets/img/static/tipo-vehiculo/{{vehiculo.tipo.icon_name}}">
+        </ion-icon>
+        <ion-icon *ngIf="!vehiculo.tipo.icon_name" src="assets/img/static/tipo-vehiculo/sedan.svg"></ion-icon>
+      </div>
+      <p>{{(vehiculo.alias) ? vehiculo.alias : vehiculo.tipo.name}}</p>
+      <p class="placas">{{vehiculo.placas}}</p>
+      <div class="color-anio">
+        <p>{{vehiculo.color.name}}</p>
+        <p>{{vehiculo.anio}}</p>
+      </div>
+      <a class="ver-detalle" (click)="showRegister(vehiculo.id)">Ver detalle</a>
+    </div>
+  </ion-slide>
+
+</ion-slides>

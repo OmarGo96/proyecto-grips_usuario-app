@@ -1,0 +1,38 @@
+.wire-transfer-container {
+  h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+.label-title {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.item-data {
+  font-size: 1.2rem;
+  color: dimgray;
+}
+.important-container {
+  background-color: #fff7ee;
+  padding: 1em;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+.important {
+  font-size: 0.8rem;
+  text-align: center;
+}
+.important-data {
+  text-align: center;
+  font-size: 0.8rem;
+}
+.label-clabe, .label-tarjeta {
+  color: dimgray;
+  text-align: center;
+}
+.clabe-data, .tarjeta-data {
+  font-size: 1.2rem;
+  text-align: center;
+}

@@ -1,0 +1,155 @@
+<ng-container>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" *ngIf="preSolicitudes"></mat-paginator>
+  <ion-card *ngFor="let preSolicitud of obs | async; let i = index">
+    <br>
+    <app-timecounter-bar [index]="i" *ngIf="generalServ.canShowTimeCounter(preSolicitud)" [dateToCompare]="dateHelper.transFormDate(preSolicitud.date, 'localTimeMoment')"></app-timecounter-bar>
+    <ion-card-content class="ion-no-padding ion-no-margin">
+      <div class="service-margin">
+        <ng-container >
+          <ion-row class="ion-justify-content-end">
+            <ion-col size *ngIf="preSolicitud.folio">
+              <div class="service-folio" >
+                <span>Num. Servicio:</span>
+                <span>{{preSolicitud.folio}}</span>
+              </div>
+            </ion-col>
+            <ion-col size="fill">
+              <div style="display: flex; justify-content: flex-end;">
+                <ion-chip [outline]="true" color="tertiary" style="font-size: 12px;margin: 0;">{{(preSolicitud.model === 'cms_padsolicitudes' ? 'Solicitud' : 'Pre-Solicitud')}}</ion-chip>
+              </div>
+            </ion-col>
+          </ion-row>
+          <hr>
+        </ng-container>
+
+        <ion-row>
+          <ion-col size="12" class="ion-no-margin">
+            <div class="date-time-indication">
+              <span class="pre-sol-status available" [ngClass]="{'available': generalServ.isAvailable(preSolicitud) === true, 'not-available': generalServ.isAvailable(preSolicitud) === false}">
+                 <ion-icon name="ellipse"></ion-icon>
+                 {{preSolStatus.statusLabel(preSolicitud.status)}}
+              </span>
+              <span class="pre-sol-date">{{(dateHelper.transFormDate(preSolicitud.complementData.fecha_hora_reservacion, 'localTime'))}}</span>
+            </div>
+            <hr>
+          </ion-col>
+
+          <ion-col size="6" style="border-right: 1px solid #e3e3e3; padding-right: 10px;">
+            <div style="display: flex; justify-content: space-around;">
+              <div class="car-data">
+                <span class="model">{{preSolicitud.car_details.brand}} {{preSolicitud.car_details.model}}</span>
+                <span class="placas">{{preSolicitud.car_details.plates}}</span>
+                <div class="color-anio">
+                  <span>{{preSolicitud.car_details.color}}</span>
+                  <span>{{preSolicitud.car_details.year}}</span>
+                </div>
+              </div>
+              <div class="vehiculo-img">
+                <ion-icon style="
+                            display: flex;
+                            flex: 1;
+                            font-size: 4rem;
+                          " [src]="'assets/img/static/tipo-vehiculo/sedan.svg'"></ion-icon>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" style="padding-left: 10px; display: flex;">
+            <div class="avatar-img">
+              <ion-img src="assets/img/static/user-avatar.svg"></ion-img>
+              <p>{{preSolicitud.user_data}}</p>
+            </div>
+          </ion-col>
+          <mat-divider></mat-divider>
+        </ion-row> <!-- service general details -->
+        <hr>
+        <ion-row>
+          <ion-col size="12" class="ion-no-margin">
+            <ion-chip
+              style="background: var(--app-blue-morado); color: white;">{{preSolicitud.complementData.tiposervicio.name}}</ion-chip>
+          </ion-col>
+        </ion-row>
+
+        <div class="directions-container">
+          <ion-row>
+            <ion-col size="2" class="ion-align-self-center">
+              <ion-img class="pin-location" src="assets/img/static/pin-seencuentra.svg"></ion-img>
+            </ion-col>
+            <ion-col size="10" class="ion-align-self-center">
+              <span class="directions-label">{{preSolicitud.service_details.from}}</span>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="2" class="ion-align-self-center">
+              <ion-img class="pin-location" src="assets/img/static/pin-sedirige.svg"></ion-img>
+            </ion-col>
+            <ion-col size="10" class="ion-align-self-center">
+              <span class="directions-label">{{preSolicitud.service_details.to}}</span>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <ng-container *ngIf="preSolicitud.complementData.fleetData">
+          <hr>
+          <ion-row>
+            <ion-col size="12">
+              <div class="operator-container">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-row>
+                      <ion-col size="auto">
+                        <ion-avatar style="width: 2.2rem;height: auto;">
+                          <img src="assets/img/static/avatar.svg">
+                        </ion-avatar>
+                      </ion-col>
+                      <ion-col size="10">
+                        <div class="operador-data">
+                          <p class="compania">{{ (preSolicitud.complementData.fleetData && preSolicitud.complementData.fleetData.company) ? preSolicitud.complementData.fleetData.company : '--' }}</p>
+                          <p class="name">{{ (preSolicitud.complementData.fleetData.operator.name) ? preSolicitud.complementData.fleetData.operator.name: '--' }}</p>
+                          <p class="grua">{{ (preSolicitud.complementData.fleetData.fleet) ? preSolicitud.complementData.fleetData.fleet.grua : '--' }}</p>
+                          <div class="time">
+                            <ion-icon name="stopwatch"></ion-icon> {{ (preSolicitud.complementData.tiempoEstimadoArribo) ? preSolicitud.complementData.tiempoEstimadoArribo: '--' }}.
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ng-container>  <!-- Operador attent data -->
+
+        <hr>
+
+        <ion-row *ngIf="preSolicitud.complementData.cotizacion">
+          <ion-col size="12">
+            <div class="total-container">
+              <span class="total-label">Total:</span>
+              <span class="total">{{preSolicitud.complementData.cotizacion.calculator.total | currency}}MXN</span>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-justify-content-end">
+          <ion-col size="6"  *ngIf="generalServ.canShowBtnAction('accept-service', preSolicitud.model, preSolicitud)">
+            <ion-button size="small" style="width: 100%" class="ion-succes-btn ion-no-margin ion-no-padding" (click)="generalServ.acceptService(preSolicitud)">
+              Aceptar y Continuar
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <div class="ion-text-right" *ngIf="preSolicitud.model === 'cms_pre_solicitudes'">
+              <ion-button size="small" color="tertiary" style="--ion-color-contrast: white !important;" [routerLink]="'/partners/cms_pre_solicitudes/'+preSolicitud.pre_sol_id">Ver detalles</ion-button>
+            </div>
+            <div class="ion-text-right"  *ngIf="preSolicitud.model === 'cms_padsolicitudes'">
+              <ion-button size="small" color="tertiary" style="--ion-color-contrast: white !important;" [routerLink]="'/partners/servicios/'+preSolicitud.id">Ver detalles</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-card-content>
+  </ion-card> <!-- pre solicitud card -->
+</ng-container>
+
+
+

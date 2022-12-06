@@ -1,0 +1,25 @@
+<app-page-toolbar-title></app-page-toolbar-title>
+<ion-content>
+  <ion-row style="align-content: center; justify-content: center;">
+    <ion-col size="10" size-md="8">
+      <div class="title-container">
+        <p class="title">Detalles de servicio id: <b *ngIf="servicioId">{{ servicioId }}</b></p>
+      </div>
+    </ion-col>
+
+    <ion-col size="10" size-md="8" *ngIf="loadingData === true">
+      <div class="spinner">
+        <b style="color: var(--app-secondary); width: 100%;">Cargando información</b>
+        <br>
+        <ion-spinner color="secondary" name="dots" ></ion-spinner>
+      </div>
+    </ion-col>
+
+  </ion-row>
+
+
+  <ng-container *ngIf="loadingData === false && solicitud">
+    <app-service-details [asModal]="false" [data]="solicitud"></app-service-details>
+  </ng-container>
+
+</ion-content>

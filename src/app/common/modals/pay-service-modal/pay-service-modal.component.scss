@@ -1,0 +1,141 @@
+.pay-title {
+  color: var(--ion-color-medium);
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+.to-pay {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.3rem;
+  color: var(--app-secondary);
+  font-weight: 600;
+  font-family: 'Helvetica Neue', serif;
+}
+mat-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.select-card {
+  text-align: left;
+  font-size: 1em;
+  color: var(--ion-color-medium);
+}
+ion-card-content {
+  padding: 16px;
+}
+.credit-card-container {
+  width: 100%;
+  background: linear-gradient(#f1efef, #ffffff);
+  color: var(--ion-color-medium);
+  padding: 12px 1.5rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 3px #00000047;
+  max-width: 350px;
+  margin: 0.2rem;
+
+  .card-brand {
+    text-align: right;
+    position: relative;
+    ion-icon {
+      font-size: 48px;
+    }
+  }
+  .card-numbers {
+
+    .card-number {
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 0;
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+  }
+  .card-name-exp {
+    font-size: 1.2rem;
+    font-weight: 600;
+    p {
+      margin: 0 0 4px;
+      padding: 0;
+      max-width: 90%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .holder-name {
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      max-width: 100%;
+    }
+  }
+}
+.selected-card {
+  border: 3px solid #00a600;
+  border-radius: 10px;
+  position: relative;
+
+  //ion-icon {
+  //  font-size: 2rem;
+  //  position: absolute;
+  //  right: -15px;
+  //  top: -15px;
+  //}
+}
+.visa {
+  background: linear-gradient(#196abb, #114e8b);
+  color: white;
+}
+.mastercard {
+  //background: linear-gradient(#f1efef, #ffffff);
+  //color: var(--ion-color-medium);
+
+  background: linear-gradient(#e28600, #ac010b);
+  color: whitesmoke;
+}
+.amex {
+  background: linear-gradient(#525252, #141414);
+  color: whitesmoke;
+}
+.carnet {
+  background: linear-gradient(#f1efef, #ffffff);
+  color: var(--ion-color-medium);
+  ion-icon {
+    color: var(--ion-color-danger);
+  }
+
+  //background: linear-gradient(#cb263e, #971b28);
+  //color: whitesmoke;
+}
+.generic {
+  background: linear-gradient(#f1efef, #ffffff);
+  color: var(--ion-color-medium);
+  ion-icon {
+    color: var(--ion-color-secondary);
+  }
+}
+.enter-cvv {
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.pay-buttons-opts {
+  padding: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  .pay-button {
+    font-size: 16px;
+    width: 100%;
+  }
+  .other-card {
+    color: var(--app-secondary-dim);
+    width: auto;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    span {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,276 @@
+<ion-header translucent *ngIf="asModal">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-timecounter-bar [index]="0" *ngIf="generalServ.canShowTimeCounter(data)" [dateToCompare]="dateHelper.transFormDate(data.date, 'localTimeMoment')"></app-timecounter-bar>
+  <br>
+  <ion-row class="ion-justify-content-end" *ngIf="asModal === false">
+    <ion-col size="6" style="padding-left: 1.3em;" *ngIf="generalServ.canShowBtnAction('accept-service', data.model, data)">
+      <ion-button expand="block" size="small" style="width: 100%;" class="ion-succes-btn ion-no-margin ion-no-padding button-shadow radius" (click)="generalServ.acceptService(data)">
+        Aceptar y Continuar
+      </ion-button>
+    </ion-col>
+    <ion-col size="6" style="padding-right: 1.3em;" *ngIf="generalServ.canShowBtnAction('cancel-service', data.model, data)">
+      <ion-button expand="block" size="small" color="light" style="width: 100%;" class="ion-no-margin ion-no-padding button-shadow radius" (click)="generalServ.cancelService()">
+        Cancelar Servicio
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <mat-accordion id="datos-servicio" *ngIf="generalServ.canShowAccordeon('datos-servicio', data.model, data)">
+    <div class="accordion-margin">
+      <mat-expansion-panel  [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Datos del Servicio
+          </mat-panel-title>
+          <mat-panel-description style="margin: 0; justify-content: flex-end;">
+            <ion-icon src="assets/img/static/asistencia/icon-tools.svg"></ion-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <ion-row class="horizonal-buttom-dotts">
+          <ion-col size="12" class="ion-no-margin">
+            <div class="date-time-indication">
+              <span class="pre-sol-status available" [ngClass]="{'available': generalServ.canShowTimeCounter(data) === true, 'not-available': generalServ.canShowTimeCounter(data) === false}">
+                 <ion-icon name="ellipse"></ion-icon>
+                {{preSolStatus.statusLabel(data.status)}}
+              </span>
+              <span class="pre-sol-date">{{(dateHelper.transFormDate(data.complementData.fecha_hora_reservacion, 'localTime'))}}</span>
+            </div>
+            <hr>
+          </ion-col>
+          <ion-col size="6" style="border-right: 1px solid #e3e3e3; padding-right: 10px;">
+            <div style="display: flex;justify-content: space-evenly;">
+              <div class="car-data">
+                <span class="model">{{data.car_details.brand}} {{data.car_details.model}}</span>
+                <span class="placas">{{data.car_details.plates}}</span>
+                <div class="color-anio">
+                  <span>{{data.car_details.color}}</span>
+                  <span>{{data.car_details.year}}</span>
+                </div>
+              </div>
+              <div class="vehiculo-img">
+                <ion-icon style="
+                            display: flex;
+                            flex: 1;
+                            font-size: 4rem;
+                          " [src]="'assets/img/static/tipo-vehiculo/sedan.svg'"></ion-icon>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" style="padding-left: 10px; display: flex;">
+            <div class="avatar-img">
+              <ion-img src="assets/img/static/user-avatar.svg"></ion-img>
+              <p>{{data.user_data}}</p>
+            </div>
+          </ion-col>
+          <mat-divider></mat-divider>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" class="ion-no-margin">
+            <ion-chip style="background: var(--app-blue-morado); color: white;">{{data.complementData.tiposervicio.name}}</ion-chip>
+          </ion-col>
+        </ion-row>
+
+        <div class="directions-container">
+          <ion-row>
+            <ion-col size="2" class="ion-align-self-center">
+              <ion-img class="pin-location" src="assets/img/static/pin-seencuentra.svg"></ion-img>
+            </ion-col>
+            <ion-col size="10" class="ion-align-self-center">
+              <span>{{data.service_details.from}}</span>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="2" class="ion-align-self-center">
+              <ion-img class="pin-location" src="assets/img/static/pin-sedirige.svg"></ion-img>
+            </ion-col>
+            <ion-col size="10" class="ion-align-self-center">
+              <span>{{data.service_details.to}}</span>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <ion-row class="form-content">
+          <ion-col size="12">
+            <mat-form-field appearance="legacy">
+              <mat-label>Descripción del lugar donde se ubica</mat-label>
+              <textarea matInput rows="4" disabled>{{data.complementData.solicitud.referencias}}</textarea>
+            </mat-form-field>
+          </ion-col>
+
+        </ion-row>
+        <mat-action-row>
+          <button mat-flat-button style="font-size: 1.5rem;" (click)="nextStep()">
+            <ion-icon style="color: var(--ion-color-medium);" name="chevron-forward-outline"></ion-icon>
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion> <!--Datos del Servicio -->
+
+  <mat-accordion *ngIf="generalServ.canShowAccordeon('operador', data.model, data)" id="operador">
+    <div class="accordion-margin">
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Operador Asigando
+          </mat-panel-title>
+          <mat-panel-description style="margin: 0; justify-content: flex-end;">
+            <ion-icon src="assets/img/static/asistencia/icon-money.svg"></ion-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-row>
+              <ion-col size="auto">
+                <ion-avatar style="
+              width: 2.2rem;
+              height: auto;
+          ">
+                  <img src="assets/img/static/avatar.svg">
+                </ion-avatar>
+              </ion-col>
+              <ion-col size="10">
+                <div class="operador-data">
+                  <p class="compania">{{ (data.complementData.fleetData && data.complementData.fleetData.company) ? data.complementData.fleetData.company : '--' }}</p>
+                  <p class="name">{{ (data.complementData.fleetData.operator.name) ? data.complementData.fleetData.operator.name: '--' }}</p>
+                  <p class="grua">{{ (data.complementData.fleetData.fleet) ? data.complementData.fleetData.fleet.grua : '--' }}</p>
+                  <div class="time">
+                    <ion-icon name="stopwatch"></ion-icon> {{ (data.complementData.tiempoEstimadoArribo) ? data.complementData.tiempoEstimadoArribo: '--' }}.
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <mat-action-row>
+          <button mat-flat-button style="font-size: 1.5rem;" (click)="prevStep()">
+            <ion-icon style="color: var(--ion-color-medium);" name="chevron-back-outline"></ion-icon>
+          </button>
+          &nbsp;          &nbsp;
+          <button mat-flat-button style="font-size: 1.5rem;" (click)="nextStep()">
+            <ion-icon style="color: var(--ion-color-medium);" name="chevron-forward-outline"></ion-icon>
+          </button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion> <!-- Datos del operador -->
+  <mat-accordion *ngIf="generalServ.canShowAccordeon('cobro', data.model, data)">
+    <div class="accordion-margin">
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Detalle de cobro
+          </mat-panel-title>
+          <mat-panel-description style="margin: 0; justify-content: flex-end;">
+            <ion-icon src="assets/img/static/asistencia/icon-money.svg"></ion-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <ion-row>
+          <ion-col size="6" class="on-no-padding ion-no-margin">
+            <p style="color: var(--app-secondary); font-weight: bold">Servicios</p>
+          </ion-col>
+          <ion-col size="6">
+            <div class="item-description" *ngIf="data.complementData.tipopago?.name">
+              <ion-chip style="background: var(--app-blue-morado);color: white;text-align: center;">{{data.complementData.tipopago.name}}</ion-chip>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ng-container *ngIf="data.complementData.cotizacion && data.complementData.cotizacion.items.length > 0">
+          <ion-row>
+            <ion-col size="2" class="ion-no-padding ion-no-margin ion-align-self-center">
+              <span>Cant.</span>
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding ion-no-margin">
+              <div class="item-large-description">
+                <span>Descripción</span>
+              </div>
+            </ion-col>
+            <ion-col size="4" class="ion-no-padding ion-no-margin ion-align-self-center ion-text-right">
+              <span>Costo</span>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let item of data.complementData.cotizacion.items">
+            <ion-col size="2" class="ion-no-padding ion-no-margin ion-align-self-center">
+              <span class="item-quantity">{{item.item_quantity}}</span>
+            </ion-col>
+            <ion-col size="6" class="ion-no-padding ion-no-margin">
+              <div class="item-large-description">
+                <span>{{item.item_description}}</span>
+              </div>
+            </ion-col>
+            <ion-col size="4" class="ion-no-padding ion-no-margin ion-align-self-center ion-text-right">
+              <span>{{item.item_price | currency}} MXN</span>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+
+        <hr style="background: var(--ion-color-medium)">
+        <ion-row>
+          <ion-col size="12" class="ion-no-padding ion-no-margin">
+            <div class="balance">
+              <span>SubTotal</span>
+              <span>{{data.complementData.cotizacion.calculator.subtotal | currency}} MXN</span>
+            </div>
+            <div class="balance">
+              <span>Impuestos</span>
+              <span>{{data.complementData.cotizacion.calculator.tax_amount | currency}} MXN</span>
+            </div>
+            <div class="balance" style="margin-top: 10px;">
+              <span class="total">Total</span>
+              <span class="total">{{data.complementData.cotizacion.calculator.total | currency}} MXN</span>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <mat-action-row>
+          <button mat-flat-button style="font-size: 1.5rem;" (click)="prevStep()">
+            <ion-icon style="color: var(--ion-color-medium);" name="chevron-back-outline"></ion-icon>
+          </button>
+          &nbsp;
+          &nbsp;
+          <button mat-flat-button style="font-size: 1.5rem;" (click)="nextStep()">
+            <ion-icon style="color: var(--ion-color-medium);" name="chevron-forward-outline"></ion-icon>
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion> <!-- Detalle de cobro -->
+
+  <div class="last-accordion"></div>
+
+</ion-content>
+<div style="position: fixed; bottom: 0; width: 100%;" *ngIf="asModal === true">
+  <ion-row class="ion-no-margin ion-no-padding ion-justify-content-end">
+    <ion-col size="6" class="ion-no-padding ion-no-margin" *ngIf="generalServ.canShowBtnAction('accept-service', data.model, data)">
+      <ion-button expand="full" style="width: 100%" class="ion-succes-btn ion-no-margin ion-no-padding button-shadow" (click)="generalServ.acceptService(data)">
+        Aceptar y Continuar
+      </ion-button>
+    </ion-col>
+    <ion-col size="6" class="ion-no-padding ion-no-margin" *ngIf="generalServ.canShowBtnAction('cancel-service', data.model, data)">
+      <ion-button expand="full" color="light" style="width: 100%;" class="ion-no-margin ion-no-padding button-shadow" (click)="generalServ.cancelService()">
+        Cancelar Servicio
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</div>
+
+
+
+

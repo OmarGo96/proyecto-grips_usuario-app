@@ -1,0 +1,58 @@
+<app-page-toolbar-title></app-page-toolbar-title>
+
+<ion-content>
+  <br>
+  <br>
+  <ng-container *ngIf="loading === true">
+    <ion-row>
+      <ion-col size="12" >
+        <div class="empty-container">
+          <ion-icon name="alert-circle"></ion-icon>
+          <p>
+            No hay información para mostrar aún ...
+          </p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+  <ng-container *ngIf="loading === false">
+    <ion-row>
+      <ion-col size="12">
+        <div class="transaction-icons">
+          <ion-img src="assets/img/static/payment-card.png" alt="paymentcard-img"></ion-img>
+          <ion-icon *ngIf="paymentSuccess" src="assets/img/static/ok-icon.svg"></ion-icon>
+          <ion-icon *ngIf="!paymentSuccess" src="assets/img/static/fail-icon.svg"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+
+      <ion-col size="11">
+        <ion-card>
+          <div class="feed-back">
+            <p class="success" *ngIf="paymentSuccess">Su pago fue exitoso</p>
+            <p class="error" *ngIf="!paymentSuccess">Pago fallido</p>
+          </div>
+          <div class="transaction-id">
+            <span *ngIf="paymentSuccess">Código Autorización: {{authCode}}</span>
+            <span *ngIf="!paymentSuccess">COD ERROR: {{errorCode}}</span>
+          </div>
+          <div class="message">
+            {{message}}
+          </div>
+          <div class="final-message">
+            {{finalMessage}}
+          </div>
+          <div class="action-button">
+            <button mat-icon-button class="button-secondary" (click)="returnHome()">
+              {{btnTxt}}
+            </button>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+
+</ion-content>

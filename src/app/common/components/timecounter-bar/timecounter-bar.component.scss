@@ -1,0 +1,28 @@
+.progressBar {
+  width: 90%;
+  margin: 5px auto;
+  height: 22px;
+  background-color: var(--ion-color-light);
+  border-radius: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+.vigencia {
+  text-align: right;
+  width: 100%;
+}
+
+.bar {
+  height: 100%;
+  text-align: right;
+  padding: 0 10px;
+  line-height: 22px;
+  width: 0;
+  background-color: darkgreen;
+  color: white;
+  box-sizing: border-box;
+  transition: all 0.5s;
+  border-radius: 15px;
+  min-width: 55px;
+  position: relative;
+}

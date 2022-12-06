@@ -1,0 +1,59 @@
+.iniciar-sesion {
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 2.5em;
+  margin-top: 2.5em;
+}
+.app-name {
+  text-align: center;
+  font-weight: bold;
+  justify-content: center;
+
+  img {
+    order: 1;
+    width: 350px;
+  }
+}
+
+.login-content {
+  display: flex;
+  flex-flow: column;
+  background-color: white;
+  padding: 0.5rem;
+}
+
+.login-errors {
+  color: white;
+  font-weight: 400;
+  background-color: #ab3535;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.spinner {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+  justify-content: center;
+}
+.forgot-pwd {
+  text-align: right;
+  font-size: 0.9em;
+  margin-bottom: 1em;
+}
+.not-user {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9em;
+   p {
+     padding: 0;
+     margin: 0;
+   }
+   a {
+     font-size: 1.3em;
+   }
+}

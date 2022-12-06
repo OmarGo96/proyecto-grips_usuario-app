@@ -1,0 +1,89 @@
+<ion-content class="ion-no-padding">
+  <ion-row style="height: 100%; align-content: center; justify-content: center;">
+    <ion-col size="12" size-md="8" style="height: 90%;">
+
+      <div class="logo-container">
+        <div class="logo">
+          <img src="assets/img/static/logo.svg" alt="Grip´s logo">
+        </div>
+      </div>
+
+
+
+      <p class="title">Nuestros Servicios</p>
+
+
+      <ion-slides  pager=true [options]="slideOptions" #slideWithNav1
+        (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav1, $event)">
+
+        <ion-slide>
+          <div class="content">
+            <div class="service-item">
+              <img src="assets/img/static/grua-azul.svg" alt="grua icon">
+              <p>Grúas</p>
+            </div>
+          </div>
+
+        </ion-slide>
+
+        <ion-slide>
+          <div class="content">
+            <div class="service-item">
+              <img src="assets/img/static/remolque-azul.svg" alt="remolque icon">
+              <p>Traslado de embarcaciones</p>
+            </div>
+          </div>
+
+        </ion-slide>
+
+        <ion-slide>
+          <div class="content">
+            <div class="service-item">
+              <img src="assets/img/static/llaves-azul.svg" alt="llaves icon">
+              <p>Cerrajería automotriz</p>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="content">
+            <div class="service-item">
+              <img src="assets/img/static/cruzeta-azul.svg" alt="cruzeta icon">
+              <p>Cambio de llantas</p>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="content">
+            <div class="service-item">
+              <img src="assets/img/static/corriente-azul.svg" alt="corrient icon">
+              <p>Paso de Corriente</p>
+            </div>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="content">
+            <div class="service-item">
+              <img src="assets/img/static/gasolina-azul.svg" alt="gasolina icon">
+              <p>Abasto de Gasolina</p>
+            </div>
+          </div>
+        </ion-slide>
+
+      </ion-slides>
+
+      <div class="buttons-actions">
+        <div class="button">
+          <ion-button class="submit-btn-outline btn-shadow" color="primary" expand="block" type="submit"
+            style="width: 8rem; margin: 0 auto;" [routerLink]="['/register']">Registrarme</ion-button>
+        </div>
+        <div class=button>
+          <ion-button class="submit-btn btn-shadow" color="primary" expand="block" type="submit"
+            style="width: 8rem; margin: 0 auto;" [routerLink]="['/login']">Iniciar Sesión</ion-button>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>

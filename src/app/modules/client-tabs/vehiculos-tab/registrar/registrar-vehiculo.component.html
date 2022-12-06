@@ -1,0 +1,146 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-card class="app-card">
+    <ion-card-content>
+
+      <ion-row style="height: 100%; align-content: center; justify-content: center">
+        <ion-col size="10" size-md="8" style="height: 90%">
+          <div class="title-container">
+            <p style="flex: 1; text-align: center">
+              <ng-container *ngIf="tipoVIcon">
+                <img src="assets/img/static/tipo-vehiculo/{{tipoVIcon}}" alt="tipo vehiculo icon" />
+              </ng-container>
+              <ng-container *ngIf="!tipoVIcon">
+                <img src="assets/img/static/tipo-vehiculo/sedan.svg" alt="tipo vehiculo icon" />
+              </ng-container>
+            </p>
+
+            <ion-fab vertical="top" horizontal="end" slot="fixed" *ngIf="vehiculoData">
+              <ion-fab-button size="small" color="danger" (click)="deleteVehiculo(vehiculoData.id)">
+                <ion-icon name="trash" color="light"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+          </div>
+
+          <form [formGroup]="registerForm">
+            <div class="form-content">
+              <ion-row class="ion-no-padding ion-no-margin">
+
+                <ion-col size="12">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Seleccione el tipo de vehículo*</mat-label>
+                    <mat-select formControlName="tipovehiculo_id" [ngClass]="{'hide': loadTiposV === true}" (selectionChange)="getIcon($event)">
+                      <mat-option *ngFor="let tipo of tiposVehiculo" [value]="tipo.id">{{tipo.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="cf.tipovehiculo_id.errors?.required">Campo requerido</mat-error>
+                    <div class="spinner form-field" *ngIf="loadTiposV === true">
+                      <ion-spinner color="secondary" name="dots" ></ion-spinner>
+                    </div>
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-col size="12">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Alias*</mat-label>
+                    <input type="text" matInput formControlName="alias">
+                    <mat-error *ngIf="cf.alias.errors?.required">Campo requerido</mat-error>
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-col size="6">
+                  <mat-form-field apparance="legacy">
+                    <mat-label>Marca de vehículo*</mat-label>
+                    <mat-select formControlName="marca_id" (selectionChange)="listClases($event)" [ngClass]="{'hide': loadMarcasV === true}">
+                      <mat-option *ngFor="let marca of marcasVehiculo" [value]="marca.id">
+                        {{marca.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="cf.marca_id.errors?.required">Campo requerido</mat-error>
+                    <div class="spinner form-field" *ngIf="loadMarcasV === true">
+                      <ion-spinner color="secondary" name="dots" ></ion-spinner>
+                    </div>
+                  </mat-form-field>
+
+
+                </ion-col>
+                <ion-col size="6">
+                  <mat-form-field apparance="legacy">
+                    <mat-label>Clase*</mat-label>
+                    <mat-select formControlName="clase_id" (selectionChange)="getClase($event)" [ngClass]="{'hide': loadClasesV === true}">
+                      <mat-option *ngFor="let clase of clasesVehiculo" [value]="clase.id">
+                        {{clase.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="cf.clase_id.errors?.required">Campo requerido</mat-error>
+                    <div class="spinner form-field" *ngIf="loadClasesV === true">
+                      <ion-spinner color="secondary" name="dots" ></ion-spinner>
+                    </div>
+
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-col size="6">
+                  <mat-form-field apparance="legacy" >
+                    <mat-label>Color*</mat-label>
+                    <mat-select formControlName="colorvehiculo_id" (selectionChange)="getColor($event)" [ngClass]="{'hide': loadColoresV === true}">
+                      <mat-option *ngFor="let color of coloresVehiculo" [value]="color.id">
+                        {{color.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="cf.colorvehiculo_id.errors?.required">Campo requerido</mat-error>
+                    <div class="spinner form-field" *ngIf="loadColoresV === true">
+                      <ion-spinner color="secondary" name="dots" ></ion-spinner>
+                    </div>
+                  </mat-form-field>
+
+
+                </ion-col>
+                <ion-col size="6">
+                  <mat-form-field apparance="legacy">
+                    <mat-label>Año*</mat-label>
+                      <input matInput type="number" formControlName="anio" inputmode="numeric" autocomplete="off">
+                    <mat-error *ngIf="cf.anio.errors?.required">Campo requerido</mat-error>
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-col size="12">
+                  <mat-form-field apparance="legacy">
+                    <mat-label>Placas*</mat-label>
+                    <input matInput formControlName="placas" autocomplete="off">
+                    <mat-error *ngIf="cf.placas.errors?.required">Campo requerido</mat-error>
+                  </mat-form-field>
+                </ion-col>
+
+                <ion-col size="12">
+                  <mat-form-field apparance="legacy">
+                    <mat-label>No. Serie</mat-label>
+                    <input matInput formControlName="noserie" autocomplete="off">
+                  </mat-form-field>
+                </ion-col>
+              </ion-row>
+
+              <div class="spinner" *ngIf="spinner === true">
+                <ion-spinner></ion-spinner>
+              </div>
+              <br />
+              <ion-button class="btn-shadow" color="secondary" expand="full"
+                (click)="submit()" *ngIf="spinner === false">{{ submitBtnLabel }}
+              </ion-button>
+            </div>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

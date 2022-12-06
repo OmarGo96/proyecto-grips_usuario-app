@@ -1,0 +1,134 @@
+.table-container {
+  @media (min-width: 760px) {
+    overflow: scroll;
+  }
+}
+
+
+/* mat-table */
+mat-table {
+  overflow: auto;
+  //width: 180%;
+  display: grid;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    // width: 180%;
+    overflow: initial;
+  }
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}
+
+.table-container, .footer-tables {
+  mat-header-cell {
+    &.mat-table-sticky {
+      //width: 100px;
+      background-color: var(--app-primary-dim);
+    }
+  }
+
+  mat-header-cell {
+    &.first-of-type {
+      max-width: calc(100vw / 10);
+      width: calc(100vw / 10);
+    }
+  }
+
+  mat-cell {
+    &.mat-table-sticky {
+      max-width: calc(100vw / 10);
+      width: calc(100vw / 10);
+      @media (max-width: 567px) {
+        max-width: calc(100vw / 5);
+        width: calc(100vw / 5);
+      }
+      background-color: #d9e1e5;
+      color: black;
+
+    }
+  }
+
+  mat-header-cell, mat-cell, mat-footer-cell {
+    &:first-of-type {
+      padding-left: 12px !important;
+      padding-left: 0rem;
+      max-width: calc(100vw / 9);
+      width: calc(100vw / 9);
+      @media (max-width: 567px) {
+        max-width: calc(100vw / 6);
+        width: calc(100vw / 6);
+      }
+    }
+    justify-content: center;
+    overflow: inherit;
+    max-width: calc(100vw / 8);
+    width: calc(100vw / 10);
+    word-break: break-all;
+
+    @media (max-width: 567px) {
+      max-width: calc(88vw / 3);
+      width: calc(88vw / 3);
+    }
+  }
+
+  mat-cell {
+    &:first-of-type {
+      font-size: 12px;
+      word-break: break-word;
+    }
+  }
+
+  mat-header-cell {
+    &:last-of-type {
+      padding-right: 0;
+    }
+    background-color: var(--ion-color-primary-shade);
+    color: white;
+  }
+
+  mat-cell:last-of-type {
+    padding-right: 0;
+  }
+
+  mat-header-cell {
+    &:nth-of-type(2) {
+      padding-left: 12px;
+      max-width: calc(100vw / 6);
+      width: calc(100vw / 6);
+      @media (max-width: 567px) {
+        max-width: calc(100vw / 3);
+        width: calc(100vw / 3);
+      }
+      &.mat-table-sticky {
+        left: 0 !important;
+        @media  (max-width: 567px) {
+          left: calc(100vw/6) !important;
+        }
+      }
+    }
+  }
+
+  mat-cell:nth-child(2) {
+    &.mat-table-sticky {
+      left: 0 !important;
+      max-width: calc(100vw / 6);
+      width: calc(100vw / 6);
+      @media  (max-width: 567px) {
+        left: calc(100vw/6) !important;
+        max-width: calc(100vw / 3);
+        width: calc(100vw / 3);
+      }
+    }
+  }
+}
+.column {
+  p {
+    word-break: initial;
+    font-size: 0.9em;
+  }
+}
+

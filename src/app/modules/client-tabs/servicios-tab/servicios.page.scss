@@ -1,0 +1,13 @@
+.tabs-container {
+  overflow: scroll;
+  margin-bottom: 1rem;
+}
+
+ion-segment-button {
+  --indicator-color: transparent !important;
+  --indicator-color-checked: transparent !important;
+}
+.segment-button-checked {
+  color: white;
+  background: var(--app-secondary);
+}

@@ -1,0 +1,59 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card class="app-card">
+    <ion-card-content>
+      <ion-row style="height: 100%; align-content: center; justify-content: center">
+        <ion-col size="12" size-md="8" style="height: 90%">
+          <div class="wire-transfer-container">
+            <img src="assets/img/static/wire-transfer2.svg" alt="wire transfer svg" style="width: 60px;">
+            <h2>{{ title }}</h2>
+            <p class="label-title">
+              Banco:
+            </p>
+            <p class="item-data">
+              {{ bankName }}
+            </p>
+            <p class="label-title">
+              Beneficiario:
+            </p>
+            <p class="item-data">
+              {{ beneficiary }}
+            </p>
+
+            <div class="important-container">
+              <p class="important">
+                <b>Importante</b>
+              </p>
+              <p class="important-data">
+                {{ importantInfo }}
+              </p>
+
+            </div>
+
+            <p class="label-clabe">
+              <b>CLABE de depósito</b>
+            </p>
+            <p class="clabe-data">
+              {{ clabeInterbank }}
+            </p>
+            <p class="label-tarjeta">
+              <b>Num. Tarjeta</b>
+            </p>
+            <p class="tarjeta-data">
+              {{ cardNumber }}
+            </p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,59 @@
+.item-container {
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+}
+
+.vehiculo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+      font-size: 0.9rem;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+      padding-right: 4px;
+      padding-left: 4px;
+  }
+}
+.vehiculo-img {
+  background-color: var(--app-light);
+  border-radius: 100px;
+  margin-bottom: 0.5rem;
+  height: 75px;
+  width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ion-icon {
+      font-size: 60px;
+  }
+  &.active-vehiculo {
+    background: var(--app-secondary-dim);
+    border: var(--app-secondary) solid 2px;
+  }
+}
+.placas {
+  font-weight: 600;
+}
+.color-anio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.ver-detalle {
+  color: var(--app-secondary);
+  text-decoration: underline;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.4rem;
+  display: block;
+}
+
+::ng-deep {
+  .swiper-pagination {
+    position: initial;
+  }
+}
+

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39.4" height="91.238" viewBox="0 0 39.4 91.238">
+  <defs>
+    <filter id="Tú" x="2" y="0" width="34" height="38" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feFlood flood-opacity="0.361"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Grupo_161" data-name="Grupo 161" transform="translate(-1069 -5838)">
+    <path id="Icon_material-location-on" data-name="Icon material-location-on" d="M25.7,3A18.187,18.187,0,0,0,7.5,21.2C7.5,34.85,25.7,55,25.7,55S43.9,34.85,43.9,21.2A18.187,18.187,0,0,0,25.7,3Zm0,24.7a6.5,6.5,0,1,1,6.5-6.5A6.5,6.5,0,0,1,25.7,27.7Z" transform="translate(1063 5872)" fill="#1661ac" stroke="#efefef" stroke-linecap="round" stroke-width="3"/>
+    <g transform="matrix(1, 0, 0, 1, 1069, 5838)" filter="url(#Tú)">
+      <text id="Tú-2" data-name="Tú" transform="translate(19 26)" fill="#1661ac" font-size="24" font-family="Roboto-Bold, Roboto" font-weight="700" letter-spacing="-0.02em"><tspan x="-13.899" y="0">Tú</tspan></text>
+    </g>
+  </g>
+</svg>

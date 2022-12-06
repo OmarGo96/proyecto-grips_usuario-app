@@ -1,0 +1,90 @@
+::ng-deep {
+
+  .custom-modal-page {
+    height: 165px;
+    position: absolute;
+    top: 35vh;
+    --backdrop-opacity: 0 !important;
+
+    width: 100%;
+    margin: 0 auto;
+    background: none;
+    border-radius: 0 0 15px 15px;
+    padding-bottom: 3px;
+
+    @media (min-width: 768px) {
+      width: 607px !important;
+    }
+
+    .modal-wrapper {
+      height: 100%;
+      border-radius: 0 0 15px 15px !important
+    }
+
+    .notification-wrapper {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .header-container {
+      background: var(--app-primary);
+      color: white;
+      font-weight: 500;
+      border-width: 0 !important;
+
+      height: 25px !important;
+
+      ion-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        height: 100%;
+      }
+    }
+
+
+    ion-content {
+      --background: white;
+      --color: var(--ion-color-light-contrast);
+    }
+  }
+
+  .notification-container {
+    text-align: center;
+    color: #071b2b;
+
+    .notification-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .notification-body {
+      font-size: 14px;
+    }
+
+  }
+}
+
+.notification-link {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border-top: 2px #80808040 solid;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  bottom: 0;
+  width: 100%;
+  z-index: 20;
+
+  a {
+    color: var(--app-secondary-dim);
+  }
+  ion-button {
+    padding-right: 5px;
+  }
+}

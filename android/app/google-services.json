@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "507324171961",
+    "project_id": "craneapps2021",
+    "storage_bucket": "craneapps2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507324171961:android:55e399916a230d47303d68",
+        "android_client_info": {
+          "package_name": "grips.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507324171961-48qbefvpo2q5g89c0asri5q2tesdc4md.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3BBgRD1sYc6LfWJSdzzKPczvY8ol1KWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507324171961-48qbefvpo2q5g89c0asri5q2tesdc4md.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

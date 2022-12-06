@@ -1,0 +1,332 @@
+<app-page-toolbar-title [hideBackBtn]="true"></app-page-toolbar-title>
+<ion-content [forceOverscroll]="false">
+
+  <mat-vertical-stepper #stepper [linear]="true">
+
+    <mat-step [stepControl]="datosInicialesForm" errorMessage="Llene todos los campos requeridos">
+      <ng-template matStepLabel>Datos del servicio</ng-template>
+      <form [formGroup]="datosInicialesForm">
+
+        <ion-card class="app-card">
+          <ion-row style="align-content: center; justify-content: center;">
+            <ion-col size="10" size-md="8" style="height: 90%;">
+              <div class="title-container" *ngIf="noRegisterVehicles === false">
+                <p class="title">Seleccione su vehículo</p>
+              </div>
+
+              <app-vehiculos-selector [makeSolicitud]="true" [reloadData]="reloadData" [unsetVehiculo]="unsetVehiculo"
+                (emitSelectVehiculo)="catchSelectVehiculo($event)" (totalVehiclesEmit)="$event <= 0 ? noRegisterVehicles = true : noRegisterVehicles = false"></app-vehiculos-selector>
+              <mat-error style="text-align: center; font-size: 12px;" *ngIf="datosInicialesF.vehiculo_id.touched && datosInicialesF.vehiculo_id.errors?.required">
+                Debe seleccionar su vehículo, dato requerido</mat-error>
+            </ion-col>
+
+          </ion-row>
+          <mat-divider></mat-divider>
+          <div class="form-content">
+            <ion-row class="ion-no-margin ion-no-padding">
+              <ng-container *ngIf="datosInicialesForm.controls.preguntas && datosInicialesF.vehiculo_id.value">
+                <ng-container formArrayName="preguntas" *ngFor="let pregunta of datosInicialesForm.get('preguntas')['controls']; let i = index">
+                  <ng-container [formGroupName]="i">
+
+                     <ion-col size="12" style="padding-top: 0;" >
+                      <div class="radio-buttons-container">
+                        <mat-label>{{ pregunta.value.pregunta_label }}</mat-label>
+                        <mat-radio-group formControlName="pregunta_response">
+                          <mat-radio-button [value]="true">SI</mat-radio-button>
+                          <mat-radio-button [value]="false">NO</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error class="custom-mat-error" *ngIf="pregunta.touched && pregunta.controls.pregunta_response.errors?.required">Campo
+                          requerido</mat-error>
+                      </div>
+                    </ion-col>
+
+                  </ng-container>
+
+                </ng-container>
+              </ng-container>
+              <div class="spinner form-field" style="margin: 0 auto;" *ngIf="loadPreguntas === true">
+                <ion-spinner color="secondary" name="dots"></ion-spinner>
+              </div>
+            </ion-row>
+          </div>
+        </ion-card>
+      </form>
+      <ion-row style="padding-right: 0.5rem;padding-left: 0.5rem;" *ngIf="noRegisterVehicles === false">
+        <ion-col size="11" *ngIf="solicitudType === 'programar'">
+          <div class="btn-step-container">
+            <ion-button (click)="prepareNextStep('programar', stepper)" color="secondary">Siguiente <ion-icon name="caret-forward"></ion-icon></ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="11" *ngIf="solicitudType === 'pre-solicitud' || 'call_request'">
+          <div class="btn-step-container">
+            <ion-button (click)="prepareNextStep('pre-solicitud', stepper)"  color="secondary">Siguiente <ion-icon name="caret-forward"></ion-icon></ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </mat-step>
+
+    <mat-step [stepControl]="solictudForm" *ngIf="enableSolitudForm" errorMessage="Llene todos los campos requeridos">
+
+      <ion-row id="solicitudForm" style="visibility: hidden; height: 7px;"></ion-row>
+
+      <ng-template matStepLabel>{{ solicitudLabel }}</ng-template>
+
+      <form [formGroup]="solictudForm" >
+        <ion-card class="app-card">
+          <div class="form-content" >
+            <ion-row class="ion-no-margin ion-no-padding">
+              <ion-col size="12">
+                <div class="ubicacion-container">
+                  <ion-button size="small" (click)="showGoogleMap('seencuentra')" color="secondary" slot="end">
+                    Obtener mi ubicación &nbsp;
+                    <ion-icon name="locate-sharp"></ion-icon>
+                  </ion-button>
+                </div>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>¿Cuál es tu ubicación?</mat-label>
+                  <textarea matInput rows="4" formControlName="seencuentra"></textarea>
+                  <mat-error class="geo-feed" *ngIf="solicitudF.seencuentra.errors?.required"><b
+                      style="color: red;">Campo
+                      requerido</b>, si no esta compartiendo su ubicación en tiempo real, ingresela manualmente.
+                  </mat-error>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="12">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Favor de realizar una descripción del lugar donde se ubica*</mat-label>
+                  <textarea matInput formControlName="referencias" rows="4"></textarea>
+                  <mat-error *ngIf="solicitudF.referencias.errors?.required">Campo requerido</mat-error>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="12">
+                <div class="ubicacion-container">
+                  <ion-button size="small" (click)="showGoogleMap('selleva', '¿A donde voy?')" color="secondary" slot="end">
+                    Seleccionar ubicación &nbsp;
+                    <ion-icon name="locate-sharp"></ion-icon>
+                  </ion-button>
+                </div>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>¿Cuál será el destino del vehículo?</mat-label>
+                  <textarea matInput formControlName="selleva" rows="4"></textarea>
+                  <mat-error class="geo-feed" *ngIf="solicitudF.selleva.errors?.required"><b style="color: red;">Campo
+                      requerido</b>, si no esta compartiendo su ubicación en tiempo real, ingresela manualmente.
+                  </mat-error>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="12">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Teléfono para contacto*</mat-label>
+                  <input type="text" matInput formControlName="telefono" [ngClass]="{'hide': loadProfile === true}">
+                  <mat-error *ngIf="solicitudF.telefono.errors?.required">Campo requerido</mat-error>
+                  <div class="spinner form-field" *ngIf="loadProfile === true">
+                    <ion-spinner color="secondary" name="dots"></ion-spinner>
+                  </div>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="12" style="padding-top: 0;" *ngIf="solicitudF.tipo.value && solicitudF.tipo.value == 'programar'">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Indicanos la fecha y hora de recolección</mat-label>
+                  <input type="datetime-local" matInput formControlName="fecha_hora" class="padding-left" autocomplete="off" />
+                  <mat-error class="custom-mat-error" *ngIf="solicitudF.fecha_hora.errors?.required">Campo
+                    requerido</mat-error>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="12" *ngIf="solicitudF.tipo.value && solicitudF.tipo.value == 'solicitar'">
+                <div class="time-container">
+                  <p>Tiempo de arribo</p>
+                  <div>
+                    <ion-icon name="stopwatch"></ion-icon> {{ (tiempoEstimado) ? tiempoEstimado : '--' }} minutos.
+                  </div>
+                </div>
+              </ion-col>
+
+              <ion-col size="12">
+                <fieldset class="fieldset-photo">
+                  <p>Proporcione una foto de su vehículo</p>
+                  <app-camera (base64Img)="catchImg($event, 'vehiculo')"></app-camera>
+                  <mat-error *ngIf="errorPhotoVehiculo">Proporciónanos una foto de tu vehículo.</mat-error>
+                </fieldset>
+                <br>
+                <mat-form-field>
+                  <mat-label>Describa las condiciones en las que se encuentra su vehículo.*</mat-label>
+                  <textarea matInput rows="4" formControlName="observaciones"></textarea>
+                  <mat-error *ngIf="solicitudF.observaciones.errors?.required">Campo requerido</mat-error>
+                </mat-form-field>
+              </ion-col>
+            </ion-row>
+
+            <br />
+
+            <ion-row style="padding-right: 0.5rem;padding-left: 0.5rem;">
+              <ion-col size="12" *ngIf="solicitudType === 'programar'">
+                <ion-button class="btn-shadow" color="secondary" expand="full" (click)="submit()" style="text-transform: uppercase;">
+                  <!--              {{ this.solicitudF.tipo.value }} ASISTENCIA-->
+                  ENVIAR ASISTENCIA
+                </ion-button>
+              </ion-col>
+              <ion-col size="11" *ngIf="solicitudType === 'pre-solicitud'">
+                <div class="btn-step-container">
+                  <ion-button (click)="prepareNextStep('select-operator', stepper)"  color="secondary">Siguiente <ion-icon name="caret-forward"></ion-icon></ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </div>
+        </ion-card>
+      </form>
+    </mat-step>
+
+    <mat-step *ngIf="enableOperatorsMap" errorMessage="LLene los campos requeridos">
+      <ion-row id="selectedOpMarker" style="visibility: hidden; height: 7px;"></ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6">
+        </ion-col>
+        <ion-col size="6">
+          <app-timecounter-bar [aditionalText]="'para completar su pago'" [timeTotal]="300" style="position: fixed;top: 3rem;right: 12px;width: 50%; z-index: 999;" *ngIf="selectedOpMarker && solicitudMinVigencia" [dateToCompare]="solicitudMinVigencia"></app-timecounter-bar>
+        </ion-col>
+      </ion-row>
+
+      <ng-template matStepLabel>Selección de Operador</ng-template>
+
+      <form style="position: relative;">
+        <ion-card class="app-card floating-controls" *ngIf="enableOperatorsMap && stepper.selectedIndex === 2 && !solicitudMinVigencia">
+          <ion-row>
+            <ion-col size="12" class="ion-no-padding">
+              <div class="google-maps-controls">
+                <label>Radio Kilómetros</label>
+                <label>{{radiusValue}} km</label>
+              </div>
+            </ion-col>
+            <ion-col size="12" class="ion-no-padding">
+              <mat-slider
+                #matSliderRadius
+                [thumbLabel]="true"
+                [tickInterval]="5"
+                color="primary"
+                style="min-width: initial; width: 100%"
+                [(ngModel)]="radiusValue"
+                (ngModelChange)="loadOperatorsMarkers(radiusValue, matSliderRadius)"
+                [ngModelOptions]="{standalone: true}"
+                [displayWith]="formatRadiusLabel"
+                [min]="1"
+                [max]="10"
+                [step]="1"
+              ></mat-slider>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+
+        <ion-card class="app-card">
+         <div style="height: 60vh;  position: relative;width: 100%">
+           <app-google-maps-javascript #googleMapsJs [currentLat]="solicitudData.lat" [currentLong]="solicitudData.lon" [showLimitCircle]="true" [enableCircleBundleMarker]="false"></app-google-maps-javascript>
+
+           <ion-card class="info-window-card" *ngIf="selectedOpMarker && selectedOpMarker.data">
+             <ion-card-header style="position: relative">
+               <button mat-raised-button class="button-select" (click)="confirmOperator()" *ngIf="!selectedOpMarker.confirm">
+                 Seleccionar
+               </button>
+               <ion-img *ngIf="selectedOpMarker.data.company_logo else companyName" class="logo-card" src="{{selectedOpMarker.data.company_logo}}"></ion-img>
+               <ng-template #companyName>
+                 <h4 style="margin: 0; text-align: center; font-weight: 500; color: #1a78aa">{{selectedOpMarker.data.company_name}}</h4>
+               </ng-template>
+               <ion-button size="small" style="position: absolute;top: 0;right: 4px;--background: gainsboro;--color: gray;--background-activated: #c9c9c9; z-index: 9999;" (click)="closeMarkerInfoWindow()" *ngIf="!selectedOpMarker.confirm">
+                 <ion-icon slot="icon-only" name="close"></ion-icon>
+               </ion-button>
+             </ion-card-header>
+             <ion-card-content>
+               <ion-row>
+                 <ion-col class="ion-no-padding" size="6" style="border-right: 1px solid #e3e3e3; padding-right: 10px;">
+                   <span class="grua_num">Grúa #{{selectedOpMarker.data.crane_number}}</span>
+                   <ion-row>
+                     <ion-col size="6" style="align-self: center;">
+                       <ion-img src="assets/img/static/tipo-gruas/arrastre.svg"></ion-img>
+                     </ion-col>
+                     <ion-col size="6">
+                       <p class="placas">Placas</p>
+                       <p class="placas" style="margin-top: 8px">{{selectedOpMarker.data.plates}}</p>
+                     </ion-col>
+                   </ion-row>
+                 </ion-col>
+                 <ion-col class="ion-no-padding" size="6" style="text-align: right;">
+                   <span class="grua_num">Operador</span>
+                   <ion-row>
+                     <ion-col size="12">
+                       <div class="operator-container">
+                         <ion-avatar style="height: 35px;width: 35px;">
+                           <ion-img *ngIf="selectedOpMarker && !selectedOpMarker.data.op_profile_img" src="assets/img/static/user-avatar.svg"></ion-img>
+                         </ion-avatar>
+                         <p>{{selectedOpMarker.data.op_name}}</p>
+                       </div>
+                     </ion-col>
+                   </ion-row>
+
+                 </ion-col>
+               </ion-row>
+               <hr>
+               <div class="directions-container" style="font-size: 10px;">
+                 <ion-row>
+                   <ion-col size="1" class="ion-no-padding ion-align-self-center" style="margin-left: 7px;">
+                     <ion-img class="pin-location" src="assets/img/static/pin-seencuentra.svg"></ion-img>
+                   </ion-col>
+                   <ion-col size="10" class="ion-align-self-center">
+                     <span class="directions-label">{{selectedOpMarker.data.origin}}</span>
+                   </ion-col>
+                 </ion-row>
+
+                 <ion-row>
+                   <ion-col size="6">
+                     <ion-row>
+                       <ion-col size="auto" class="ion-no-padding ion-align-self-center">
+                         <ion-img class="pin-location" src="assets/img/static/route-distance.svg"></ion-img>
+                       </ion-col>
+                       <ion-col size="9" class="ion-align-self-center">
+                         <span class="directions-label">Distancia de ti: {{selectedOpMarker.data.distance}}</span>
+                       </ion-col>
+                     </ion-row>
+                   </ion-col>
+                   <ion-col size="6">
+                     <ion-row>
+                       <ion-col size="auto" class="ion-no-padding ion-align-self-center">
+                         <ion-img class="pin-location" src="assets/img/static/distance-clock.svg"></ion-img>
+                       </ion-col>
+                       <ion-col size="9" class="ion-align-self-center">
+                         <span class="directions-label">Llegada aprox: {{selectedOpMarker.data.arrive}}</span>
+                       </ion-col>
+                     </ion-row>
+                   </ion-col>
+                   <ion-col size="12">
+                     <ion-row>
+                       <ion-col size="auto" class="ion-no-padding ion-align-self-center">
+                         <ion-img class="pin-location" src="assets/img/static/cost.svg"></ion-img>
+                       </ion-col>
+                       <ion-col size="auto" class="ion-align-self-center">
+                         <span class="directions-label">Costo: {{selectedOpMarker.data.price | currency}} MXN</span>
+                       </ion-col>
+                     </ion-row>
+                   </ion-col>
+                 </ion-row>
+               </div>
+             </ion-card-content>
+           </ion-card>
+         </div>
+        </ion-card>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+
+  <ion-button expand="full" color="success" class="confirm-pay-btn" *ngIf="selectedOpMarker && (selectedOpMarker.blocked && selectedOpMarker.confirm)" style="position: fixed; bottom: 0;" (click)="confirmAndPay()"><b>CONFIRMAR Y PAGAR</b></ion-button>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="stepper.selectedIndex > 0 && (!selectedOpMarker?.blocked || !selectedOpMarker?.confirm)">
+    <ion-fab-button color="secondary" size="small" (click)="prevStep(stepper, $event)">
+      <ion-icon name="chevron-up-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

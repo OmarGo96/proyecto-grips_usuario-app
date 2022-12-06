@@ -1,0 +1,63 @@
+.signature-general-content {
+    max-width: 500px;
+    min-width: 300px;
+    margin: 0 auto;
+}
+.signature-container {
+
+
+    text-align: center;
+    font-weight: bolder;
+
+    .signature-buttons {
+      display: flex;
+      justify-content: flex-end;
+
+        button {
+            margin-right: 1rem;
+        }
+
+        .btn-ok-sign {
+            background-color: #162992;
+            color: white;
+        }
+
+        .btn-undo-sign {
+            background-color: #2d2938;
+            color: white;
+        }
+
+        .btn-clear-sign {
+            background-color: #2a1b54;
+            color: white;
+        }
+    }
+}
+.mobile-signature {
+    position: absolute;
+    bottom: -24px;
+}
+
+.expansion-card {
+    margin-bottom: 1.5rem;
+}
+
+::ng-deep .expansion-card > .mat-expansion-indicator:after {
+    color: white;
+}
+
+.canvas-signature {
+    background-color: rgba(252, 252, 252, 0.37);
+    margin-top: 1rem;
+    margin-bottom: 0.5em;
+    box-shadow: 0 4px 6px 4px #b4b4b45e;
+}
+.mobile-signature {
+    position: absolute;
+    bottom: -24px;
+}
+.mat-accordion {
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+}

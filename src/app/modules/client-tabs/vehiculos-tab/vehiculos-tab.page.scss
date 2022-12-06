@@ -1,0 +1,42 @@
+.vehiculo-container {   
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    p {
+        font-size: 1.1rem;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        padding-right: 4px;
+        padding-left: 4px;
+    }
+}
+.vehiculo-img {
+    background-color: var(--app-light);
+    border-radius: 100px;
+    margin-bottom: 0.5rem;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ion-icon {
+        font-size: 85px;
+    }
+}
+.placas {    
+    font-weight: 600;
+}
+.color-anio {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.ver-detalle {
+    color: var(--app-secondary);
+    text-decoration: underline;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 0.4rem;
+    display: block;
+}

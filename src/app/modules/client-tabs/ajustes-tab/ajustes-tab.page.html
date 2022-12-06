@@ -1,0 +1,218 @@
+
+<app-page-toolbar-title></app-page-toolbar-title>
+
+<ion-content  class="ion-padding">
+  <div class="title-container">
+    <p class="title">Ajustes Perfíl</p>
+  </div>
+  <br>
+  <ion-card class="card-form ion-no-margin">
+    <ion-card-content>
+      <ion-item-divider>
+        <ion-label>E-Mail </ion-label>
+        <ion-label slot="end">
+          <ion-button color="secondary" size="small" style="float: right;" (click)="changeCredentials()"
+                      *ngIf="credentialsForm.disabled && changePass === false">EDITAR
+          </ion-button>
+          <ion-button color="secondary" size="small" style="float: right;" (click)="submitCredentials()"
+                      *ngIf="credentialsForm.enabled && changePass === false">GUARDAR
+          </ion-button>
+          <ion-button color="secondary" size="small" style="float: right;" (click)="cancelCredentials()"
+                      *ngIf="credentialsForm.enabled && changePass === false">CANCELAR
+          </ion-button>
+        </ion-label>
+      </ion-item-divider> <!--credentials form buttons-->
+      <form [formGroup]="credentialsForm">
+        <div class=form-content [ngClass]="{'read-only': credentialsForm.disabled}">
+          <ion-row class="ion-no-padding ion-no-margin">
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>E-Mail*</mat-label>
+                <input type="email" matInput formControlName="email" class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="credentialsF.email.errors?.required">Campo requerido</mat-error>
+                <mat-error *ngIf="credentialsF.email.errors?.minlength">El email debe tener al menos 6 caracteres</mat-error>
+                <mat-error *ngIf="credentialsF.email.errors?.maxlength">El email ebe tener al menos 80 caracteres</mat-error>
+                <mat-error *ngIf="credentialsF.email.errors?.pattern">Introduzca un correo electrónico válido</mat-error>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form> <!-- Credentials form-->
+      <ion-item-divider>
+        <ion-label>Cambiar contraseña</ion-label>
+        <ion-label slot="end">
+          <ion-button color="secondary" style="float: right;" size="small" (click)="changePassword()"
+                      *ngIf="changePass === false">EDITAR
+          </ion-button>
+          <ion-button color="secondary" style="float: right;" size="small" (click)="savePassword()"
+                      *ngIf="changePass === true">GUARDAR
+          </ion-button>
+          <ion-button color="secondary" style="float: right;" size="small" (click)="cancelPassword()"
+                      *ngIf="changePass === true">CANCELAR
+          </ion-button>
+
+        </ion-label>
+      </ion-item-divider> <!-- cambiar contraseña form buttons-->
+      <form [formGroup]="changePwdForm">
+        <div class=form-content [ngClass]="{'read-only': changePwdForm.disabled}">
+          <ion-row class="ion-no-padding ion-no-margin">
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>Contraseña actual*</mat-label>
+                <input type="password" matInput formControlName="old_password" class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="pwdF.old_password.errors?.required">Campo requerido</mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>Nueva contraseña*</mat-label>
+                <input type="password" matInput formControlName="new_password" class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="pwdF.new_password.errors?.required">Campo requerido</mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="12">
+              <mat-form-field appearance="legacy" *ngIf="changePass === true">
+                <mat-label>Confirmar Contraseña*</mat-label>
+                <input type="password" matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="confirmPassword"
+                       class="padding-left" autocomplete="off" />
+                <div *ngIf="passMatch === false" class="custom-errors">Las contraseñas no coinciden</div>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card> <!-- EMAIL PASSWORD -->
+  <br>
+  <ion-card class="card-form ion-no-margin">
+    <ion-card-content>
+      <ion-item-divider>
+        <ion-label id="datos-generales">Datos Generales</ion-label>
+        <ion-label slot="end">
+          <ion-button color="secondary" style="float: right;" size="small"
+                      (click)="changeContactData()" *ngIf="contactDataForm.disabled">EDITAR
+          </ion-button>
+          <ion-button color="secondary" style="float: right;" size="small"
+                      (click)="submitContactData()" *ngIf="contactDataForm.enabled">GUARDAR
+          </ion-button>
+          <ion-button color="secondary" style="float: right;" size="small"
+                      (click)="cancelSubmitContactData()" *ngIf="contactDataForm.enabled">CANCELAR
+          </ion-button>
+        </ion-label>
+      </ion-item-divider>
+      <form [formGroup]="contactDataForm">
+        <div class=form-content [ngClass]="{'read-only': contactDataForm.disabled}">
+          <ion-row>
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>Nombre*</mat-label>
+                <input type="text" matInput formControlName="name" autocomplete="off" class="padding-left" />
+                <mat-error *ngIf="contactF.name.errors?.required">Campo requerido</mat-error>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="6">
+              <mat-form-field appearance="legacy">
+                <mat-label>RFC</mat-label>
+                <input type="text" matInput formControlName="vat" class="padding-left" autocomplete="off" />
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="6">
+              <mat-form-field appearance="legacy">
+                <mat-label>Teléfono</mat-label>
+                <input type="tel" inputmode="numeric" matInput formControlName="mobile" class="padding-left" autocomplete="off" />
+              </mat-form-field>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-label position="stacked" class="ion-no-margin" style="margin:0; font-size: 0.8rem;" color="primary">Pais</ion-label>
+              <ionic-selectable
+                [ngClass]="{'hide': loadingCountries === true}"
+                formControlName="country_id"
+                [items]="countries"
+                itemValueField="id"
+                itemTextField="name"
+                [(ngModel)]="selectCountry"
+                (onChange)="loadStatesList($event);"
+                [canSearch]="true"
+              ></ionic-selectable>
+              <div class="spinner form-field" *ngIf="loadingCountries === true">
+                <ion-spinner color="secondary" name="dots" ></ion-spinner>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label position="stacked" class="ion-no-margin" style="margin:0; font-size: 0.8rem;" color="primary">Estado</ion-label>
+              <ionic-selectable
+                [ngClass]="{'hide': loadStates === true}"
+                formControlName="state_id"
+                [items]="states"
+                itemValueField="id"
+                itemTextField="name"
+                [(ngModel)]="selectedState"
+                [canSearch]="true"
+              ></ionic-selectable>
+              <div class="spinner form-field" *ngIf="loadStates === true">
+                <ion-spinner color="secondary" name="dots" ></ion-spinner>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <mat-form-field appearance="legacy">
+                <mat-label>Ciudad</mat-label>
+                <input type="text" matInput formControlName="city" autocomplete="off" class="padding-left" />
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="6">
+              <mat-form-field appearance="legacy">
+                <mat-label>Zip</mat-label>
+                <input type="text" matInput formControlName="zip" autocomplete="off" class="padding-left" />
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>Dirección 1</mat-label>
+                <input type="text" matInput formControlName="street" autocomplete="off" class="padding-left" />
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="12">
+              <mat-form-field appearance="legacy">
+                <mat-label>Dirección 2</mat-label>
+                <input type="text" matInput formControlName="street2" autocomplete="off" class="padding-left" />
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card> <!-- GENERAL DATA -->
+  <br>
+  <ion-card class="card-form ion-no-margin">
+    <ion-card-content>
+      <ion-item-divider>
+        <h2>Tarjetas</h2>
+        <ion-label slot="end">
+          <ion-button color="secondary" style="float: right;" size="small" (click)="addCard()">AGREGAR</ion-button>
+        </ion-label>
+      </ion-item-divider>
+      <div class="spinner form-field" *ngIf="cardDataLoader === true">
+        <ion-spinner color="secondary" name="dots" ></ion-spinner>
+        <br>
+      </div>
+      <ng-container *ngIf="cardDataLoader === false && cardData && cardData.length > 0">
+        <ion-item *ngFor="let card of cardData" style="margin-bottom: 12px">
+          <div class="card-container" slot="start" [ngClass]="[card.brand ? card.brand : 'generic']">
+            <ion-icon src="assets/img/static/card-brands/{{card.brand}}.svg"></ion-icon>
+          </div>
+          <ion-label>
+            <h4>Terminada en {{card.card_number.substr(card.card_number.length - 4)}}</h4>
+            <ion-button style="float: right;" color="danger" (click)="deleteCard(card)">
+              <ion-icon name="close-circle-sharp"></ion-icon>
+            </ion-button>
+            <p>Banco: {{card.bank_name}}</p>
+            <p>Tipo: {{card.type | titlecase}} | {{card.brand | titlecase}}</p>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+
+    </ion-card-content>
+  </ion-card> <!-- CARDS DATA -->
+</ion-content>

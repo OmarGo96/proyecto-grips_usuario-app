@@ -1,0 +1,27 @@
+<!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button (click)="addPhotoToGallery()">
+    <ion-icon name="camera"></ion-icon>
+  </ion-fab-button>
+</ion-fab> -->
+
+<ion-button class="add-button" style="margin: 0 auto;" (click)="takePicture()" shape="round" color="primary">
+  <ion-icon name="camera"></ion-icon>
+</ion-button>
+
+<ion-grid>
+  <ion-row style="justify-content: center;">
+
+    <ion-col *ngIf="_platformRun === 'capacitor' && photos" size="auto">
+      <ion-thumbnail>
+        <ion-img [src]="photos.webviewPath"></ion-img>
+      </ion-thumbnail>
+    </ion-col>
+
+    <ion-col size="auto" *ngIf="imgURL && _platformRun === 'web'">
+      <ion-thumbnail>
+        <ion-img [src]="imgURL"></ion-img>
+      </ion-thumbnail>
+    </ion-col>
+
+  </ion-row>
+</ion-grid>

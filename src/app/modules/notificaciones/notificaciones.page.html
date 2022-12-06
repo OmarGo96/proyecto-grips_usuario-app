@@ -1,0 +1,79 @@
+<app-page-toolbar-title [hideBackBtn]="false" [title]="'Notificaciones'"></app-page-toolbar-title>
+
+<ion-content>
+  <ng-container *ngIf="(notifications && notifications.length === 0) && loadingInfo === false">
+    <div class="empty-container">
+      <ion-icon name="alert-circle"></ion-icon>
+      <p>
+        Listado de notificaciones esta vacio
+      </p>
+    </div>
+  </ng-container>
+
+  <br>
+  <ion-list *ngIf="(notifications && notifications.length > 0)">
+
+    <fieldset class="identificador-noti-container">
+      <legend>Identificador Notificaciones</legend>
+      <div class="indentificador-noti">
+        <ion-icon name="ellipse" style="color: var(--noti-normal-color)"></ion-icon> Normal
+        <ion-icon name="ellipse" style="color: var(--noti-important-color)"></ion-icon> Importante
+        <ion-icon name="ellipse" style="color: var(--noti-urgent-color)"></ion-icon> Urgente
+      </div>
+    </fieldset>
+
+    <ion-list-header *ngIf="notifications">
+      Total: {{ (notifications && notifications.length > 0) ? notifications.length : '--' }}
+    </ion-list-header>
+
+    <ion-list-header *ngIf="!notifications">
+      No hay notificaciones pendientes
+    </ion-list-header>
+    <br>
+
+    <ng-container *ngIf="notifications">
+      <ion-item-sliding *ngFor="let item of notifications">
+        <ion-row class="ion-justify-content-end">
+          <ion-col size="10" class="ion-no-margin ion-no-padding">
+            <app-timecounter-bar *ngIf="item.pre_sol && item.pre_sol.fecha_hora_extension" [dateToCompare]="dateConv.transFormDate(item.pre_sol.fecha_hora_extension, 'localTimeMoment')"></app-timecounter-bar>
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="assets/img/static/notification.svg">
+          </ion-avatar>
+
+          <ion-label class="ion-text-wrap">
+            <div class="notification-title">
+              <h2 *ngIf="item.status === 1"><ion-icon name="ellipse" [ngClass]="{'general-indicator': item.priority === 1, 'important-indicator': item.priority === 2, 'urgent-indicator': item.priority === 3}"></ion-icon></h2>
+              <h2 *ngIf="item.status === 2"><ion-icon name="checkmark-done-sharp" [ngClass]="{'general-indicator': item.priority === 1, 'important-indicator': item.priority === 2, 'urgent-indicator': item.priority === 3}"></ion-icon></h2>
+              <h5>{{ item.date_reg }}</h5>
+            </div>
+            <p>{{ item.body }}</p>
+            <ion-button
+            class="ion-no-margin ion-no-padding"
+            style="
+            --padding-bottom: 0;
+            --padding-start: 0;
+            --padding-top: 0;
+            --padding-end: 0;
+            text-decoration: underline;
+            "
+            fill="clear" (click)="readMore(item)">Leer Más</ion-button>
+          </ion-label>
+
+        </ion-item>
+        <ion-item-options (ionSwipe)="testSwipe(item.id)">
+
+          <ion-item-option color="primary" (click)="putNotiRead(item.id)" *ngIf="item.status === 1">
+            <ion-icon name="checkmark-done" style="font-size: 2rem; color:  white;"></ion-icon>
+          </ion-item-option>
+
+        </ion-item-options>
+
+      </ion-item-sliding>
+    </ng-container>
+  </ion-list>
+</ion-content>
+<app-reload-button _horizontal="end" [ngClass]="{'disable': loadingInfo}" (reloadPush$)="$event === true ? listNotifications() : false"></app-reload-button>

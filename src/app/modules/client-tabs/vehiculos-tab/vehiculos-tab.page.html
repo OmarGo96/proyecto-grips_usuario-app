@@ -1,0 +1,51 @@
+<app-page-toolbar-title></app-page-toolbar-title>
+
+<ion-content>
+  <ion-card class="app-card">
+    <ion-card-header>
+      <ion-card-title>Mis vehículos registrados</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12" *ngIf="loadData === true">
+          <div class="spinner">
+            <b style="color: var(--app-secondary); width: 100%;">Cargando información</b>
+            <br>
+            <ion-spinner color="secondary" name="dots" ></ion-spinner>
+          </div>
+        </ion-col>
+
+        <ng-container>
+          <ion-col size="12" class="ion-text-center" *ngIf="vehiculos && vehiculos.length == 0">
+            <b style="color: var(--app-secondary); width: 100%; text-align: center;">No tiene vehículos registrados aún.</b>
+          </ion-col>
+        </ng-container>
+
+        <ion-col size="6" *ngFor="let vehiculo of vehiculos" [ngClass]="{'hide': loadData === true}">
+          <div class="vehiculo-container">
+            <div class="vehiculo-img circle-shadow">
+              <ion-icon *ngIf="vehiculo.tipo.icon_name" src="assets/img/static/tipo-vehiculo/{{vehiculo.tipo.icon_name}}"></ion-icon>
+              <ion-icon *ngIf="!vehiculo.tipo.icon_name" src="assets/img/static/tipo-vehiculo/sedan.svg"></ion-icon>
+            </div>
+            <p>{{(vehiculo.alias) ? vehiculo.alias : vehiculo.tipo.name}}</p>
+            <p class="placas">{{vehiculo.placas}}</p>
+            <div class="color-anio">
+              <p>{{vehiculo.color.name}}</p>
+              <p>{{vehiculo.anio}}</p>
+            </div>
+            <a class="ver-detalle" (click)="showRegister(vehiculo.id)">Ver detalle</a>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button style="--color: white;" (click)="showRegister()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

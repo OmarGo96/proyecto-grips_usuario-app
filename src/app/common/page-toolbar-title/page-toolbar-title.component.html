@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="align-items: self-end;">
+      {{headerTitle}}
+      <p class="ion-no-margin subtitle">{{headerSubtitle}}</p>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button style="--color:white;" (click)="back()" [ngClass]="{'hide': hideBackBtn}">
+        <ion-icon name="arrow-undo-sharp" style="font-size: 1.5em; padding: 0.5rem; color: white; float: right;"></ion-icon>
+      </ion-button>
+
+      <ion-button style="--color: white;" id="notification-button" (click)="goToNotificationsList()">
+        <ion-icon style="font-size: 1.5em; padding: 0.5rem; color: white;" name="notifications">
+        </ion-icon>
+        <ion-badge id="notifications-badge" color="danger" *ngIf="notiServ.$totalNotiUnRead.value && notiServ.$totalNotiUnRead.value > 0">{{notiServ.$totalNotiUnRead.value}}</ion-badge>
+      </ion-button>
+
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="sessionServ.logout()" style="--color:white;">
+        <ion-icon style="font-size: 1.5em; padding: 0.5rem; color: white; float: right;" name="exit-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

@@ -1,0 +1,198 @@
+<ion-card class="app-card ion-no-margin ion-no-padding" style="padding: 1rem;" *ngIf="!solicitudes">
+  <ion-card-title>No hay solicitudes procesadas</ion-card-title>
+</ion-card>
+
+<ng-container>
+
+  <ion-card class="app-card ion-no-margin" *ngIf="solicitudes && solicitudes.length > 0">
+
+    <ion-card-content class="ion-no-padding" style="margin-top: 1em;">
+      <ion-row>
+        <ion-col size="12">
+          <ion-searchbar [(ngModel)]="searchKey" placeholder="Buscar en la tabla" class="padding-left"
+            (ionChange)="applyFilterTable($event)" (ionCancel)="onSearchClearFilterTable()"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" class="ion-no-padding ion-justify-content-center">
+
+          <div style="
+            margin-left: 1.2rem;
+            margin-right: 1.2rem;
+            margin-bottom: 0.5rem;
+          ">
+            <table class="indicator-table">
+              <tr>
+                <th>Indicadores</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>
+                  <ion-icon name="eye"></ion-icon>
+                </td>
+                <td>
+                  Ver detallado solicitud
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <ion-icon name="receipt"></ion-icon>
+                </td>
+                <td>
+                  Ver ticket de pago
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <ion-icon name="document-attach"></ion-icon>
+                </td>
+                <td>
+                  Adjuntar comprobante de pago
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="mat-elevation-z8 table-container">
+            <mat-table [dataSource]="listSolicitudes" matSort>
+
+              <ng-container matColumnDef="action" sticky>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <ion-icon name="cog"></ion-icon>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" style="padding: 0 !important;">
+                  <div class="column">
+                    <ion-button color="secondary" size="small" [routerLink]="['/partners/servicios', row.id]">
+                      <ion-icon name="eye"></ion-icon>
+                    </ion-button>
+                  </div>
+                </mat-cell>
+              </ng-container><!-- action-->
+
+              <ng-container matColumnDef="photo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <ion-icon name="cog"></ion-icon>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column">
+
+                    <ion-button color="secondary" size="small" *ngIf="checkNeedComprobante(row) === true" [routerLink]="['/partners/servicios', row.id]">
+                      <ion-icon name="document-attach"></ion-icon>
+                    </ion-button> <!-- attach payment receipt -->
+
+                    <ion-button color="secondary" size="small" *ngIf="checkPaymentTicketShow(row) === true" (click)="viewTicketPayment(row)">
+                      <ion-icon name="receipt"></ion-icon>
+                    </ion-button> <!-- view payment receipt -->
+
+                  </div>
+                </mat-cell>
+              </ng-container><!-- photo-->
+
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Estatus</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column" style="width: 7rem;">
+                    <p>
+                      {{(row.status ? row.status : '--')}}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container> <!-- status -->
+
+
+              <ng-container matColumnDef="fecha_hora_reservacion">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Prog.</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column" style="width: 5rem;">
+                    <p>
+                      {{(row.fecha_hora_reservacion ? (row.fecha_hora_reservacion | date : 'dd/MM/YYYY h:mm:s aa' ) : '--')}}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container> <!-- fecha_hora_reservacion -->
+
+
+              <ng-container matColumnDef="alias_vehiculo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Alias Vehículo</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column">
+                    <p>
+                      {{(row.alias_vehiculo ? row.alias_vehiculo : '--')}}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container> <!-- alias_vehiculo -->
+
+              <ng-container matColumnDef="tipo_servicio">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo Servicio</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column">
+                    <p>
+                      {{(row.tipo_servicio) ? row.tipo_servicio : '--'}}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container><!-- tipo_servicio-->
+
+              <ng-container matColumnDef="tipo_pago">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo Pago</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column" style="width: 7rem;">
+                    <p>
+                      {{(row.tipo_pago) ? row.tipo_pago : '--'}}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container><!-- tipo_pago-->
+
+              <ng-container matColumnDef="total_pago">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Total Pago</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div class="column">
+                    <p>
+                      {{(row.total_pago) ? (row.total_pago | currency) + 'MXN' : '--'}}
+                    </p>
+                  </div>
+                </mat-cell>
+              </ng-container> <!-- total_pago -->
+
+              <ng-container matColumnDef="init">
+                <mat-footer-cell *matFooterCellDef colspan="8"
+                  style="color: var(--app-primary); font-weight: 400; max-width: 100%;">
+                  Ingrese un valor usando el motor de búsqueda ubicado en la parte superior
+                </mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="8" max-width: 100%;>
+                  <mat-spinner [diameter]="40"></mat-spinner>
+                </mat-footer-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="8" style="color: #2196F3; max-width: 100%;">
+                  No se contraron datos
+                </mat-footer-cell>
+              </ng-container>
+
+              <!--Table Footer-->
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{hovered: row.hovered, highlighted: row.id === pickedSolicitud.id}"
+                (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+              <mat-footer-row *matFooterRowDef="['noData']"
+                [ngClass]="{hide:!(listSolicitudes!=null && listSolicitudes.data.length==0)}">
+              </mat-footer-row>
+            </mat-table>
+
+            <!-- paginator -->
+            <mat-paginator [pageSizeOptions]="[2, 5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+          </div> <!-- table content-->
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card> <!--  table results -->
+
+</ng-container>

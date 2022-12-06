@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar style="--background: white;">
+    <ion-buttons slot="start">
+      <ion-button style="--color:var(--app-primary);" (click)="back()">
+        <ion-icon name="arrow-undo-sharp" style="font-size: 1.5em; padding: 0.5rem; color: var(--app-primary); float: right;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding img-background" [fullscreen]="true">
+  <ion-row style="height: 100%; align-content: center; justify-content: center">
+    <ion-col size="10" size-md="8" style="height: 90%">
+      <div>
+        <p class="otp-title">Estas a un paso de terminar</p>
+        <p class="opt-instructions">
+          {{ title }}
+        </p>
+        <br>
+        <form>
+          <mat-form-field appearance="fill">
+            <mat-label>E-Mail</mat-label>
+            <input matInput type="email" [(ngModel)]="verifyEmail" [ngModelOptions]="{standalone: true}" autocomplete="off" [readonly]="readonlyEmail && readonlyEmail === true">
+          </mat-form-field>
+        </form>
+        <ion-button *ngIf="type === 'recovery-pwd'" class="submit-btn btn-shadow" color="secondary" size="small" expand="block" style="width: 50%; margin: 0 auto;"
+          (click)="sendNewCode()">{{optGenerated ? 'Nuevo código' : 'Generar código'}}
+        </ion-button>
+      </div>
+
+
+        <div class="form-content">
+
+          <ion-row class="ion-justify-content-center" *ngIf="optGenerated || type === 'verify-register'">
+
+            <fieldset class="code-fieldset">
+              <legend>Código de Verificación</legend>
+              <div id="divOuter">
+                <div id="divInner">
+                  <input id="partitioned" (keyup)="stopCarret($event)" [(ngModel)]="otpCode" (ngModelChange)="otpCode = $event.toUpperCase()" (keydown)="stopCarret($event)" type="text" maxlength="4" autocomplete="off">
+                </div>
+              </div>
+
+              <ion-button *ngIf="type === 'recovery-pwd'" class="submit-btn btn-shadow" color="secondary" size="small" expand="block" style="width: 50%; margin: 0 auto; margin-bottom: 2em;"
+                (click)="verifyCode()">Cambiar contraseña
+              </ion-button>
+            </fieldset>
+
+          </ion-row>
+
+
+          <br>
+          <br>
+
+          <ion-row *ngIf="type === 'recovery-pwd' && codeCorrect">
+            <h4>Ingresa tu nueva contraseña</h4>
+            <form [formGroup]="newPasswordForm">
+              <mat-form-field appearance="legacy">
+                <mat-label>Contraseña*</mat-label>
+                <input type="password" matInput formControlName="password" class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="newPasswordForm.controls.password.errors?.required">Contraseña requerida</mat-error>
+                <mat-error *ngIf="newPasswordForm.controls.password.errors?.minlength">La contraseña debe tener al menos 5 carácteres</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="legacy">
+                <mat-label>Confirmar Contraseña*</mat-label>
+                <input type="password" matInput formControlName="confirm_password"
+                  class="padding-left" autocomplete="off" />
+                <mat-error *ngIf="newPasswordForm.controls.confirm_password.errors?.required">Contraseña requerida</mat-error>
+                <mat-error *ngIf="newPasswordForm.controls.confirm_password.errors?.minlength">La contraseña debe tener al menos 5 carácteres</mat-error>
+                <div *ngIf="confirmPwdError === true" class="custom-errors">Las contraseñas no coinciden</div>
+              </mat-form-field>
+            </form>
+
+          </ion-row>
+
+          <div class="spinner" *ngIf="spinner === true">
+            <ion-spinner></ion-spinner>
+          </div>
+
+          <br>
+          <ng-container *ngIf="spinner === false">
+            <ion-button *ngIf="type === 'verify-register'" class="submit-btn btn-shadow" color="primary" expand="block" style="width: 100%; margin: 0 auto"
+                        (click)="submit()" >{{ sendBtnText ? sendBtnText : 'Continuar' }}
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="type === 'recovery-pwd' && optGenerated && codeCorrect" class="submit-btn btn-shadow" color="primary" expand="block" style="width: 100%; margin: 0 auto"
+                        (click)="submit()" >{{ sendBtnText ? sendBtnText : 'Continuar' }}
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ng-container>
+
+        </div>
+
+    </ion-col>
+  </ion-row>
+</ion-content>

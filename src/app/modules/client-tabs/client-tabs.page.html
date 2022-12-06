@@ -1,0 +1,26 @@
+<ion-tabs
+#myTabs
+(ionTabsDidChange)="getSelectedTab()"
+>
+
+  <ion-tab-bar slot="bottom" color="primary" style="height: 4rem;">
+
+    <ion-tab-button (click)="navigateTo('asistencias')">
+      <img class="tab-icon" [ngClass]="{'active': activeTabName === 'asistencias'}" src="assets/img/static/tabs/asistencia.svg" alt="asistencia">
+    </ion-tab-button>
+
+    <ion-tab-button tab="vehiculos">
+      <img class="tab-icon" [ngClass]="{'active': activeTabName === 'vehiculos'}" src="assets/img/static/tabs/mis-vehiculos.svg" alt="mis vehiculos">
+    </ion-tab-button>
+
+    <ion-tab-button tab="servicios">
+      <img class="tab-icon" [ngClass]="{'active': activeTabName === 'servicios'}" src="assets/img/static/tabs/servicios.svg" alt="servicios">
+    </ion-tab-button>
+
+    <ion-tab-button tab="ajustes">
+      <img class="tab-icon" [ngClass]="{'active': activeTabName === 'ajustes'}" src="assets/img/static/tabs/ajustes.svg" alt="ajustes">
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>

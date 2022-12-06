@@ -1,0 +1,49 @@
+<ion-content class="ion-no-padding img-background">
+  <ion-row style="height: 100%; align-content: center; justify-content: center;">
+    <ion-col size="10" size-md="8" style="height: 90%;">
+
+      <div class="logo-container">
+        <div class="logo">
+          <img src="assets/img/static/logo.svg" alt="Grip´s logo">
+        </div>
+      </div>
+
+      <p class="iniciar-sesion">Iniciar Sesión</p>
+
+      <form [formGroup]="loginForm" (submit)="onSubmit()">
+        <div class="login-content">
+          <mat-form-field appearance="legacy">
+            <mat-label>Correo Electrónico</mat-label>
+            <input type="email" matInput formControlName="email" class="padding-left" autocomplete="off">
+            <mat-error *ngIf="cf.email.errors?.required">Campo requerido</mat-error>
+            <mat-error *ngIf="cf.email.errors?.email">Email invalido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password" class="padding-left" autocomplete="off">
+            <mat-error *ngIf="cf.password.errors?.required">Contraseña requerida</mat-error>
+            <mat-error *ngIf="cf.password.errors?.minlength">La contraseña debe tener al menos 5 caracteres</mat-error>
+          </mat-form-field>
+
+          <div class="forgot-pwd">
+            <a (click)="goToPwdRecovery()">¿Olvidaste tú contraseña?</a>
+          </div>
+
+          <div class="spinner" *ngIf="spinner === true">
+            <ion-spinner></ion-spinner>
+          </div>
+          <br>
+          <ion-button class="submit-btn btn-shadow" color="primary" [disabled]="loginForm.invalid" expand="block" type="submit" style="width: 60%; margin: 0 auto;"
+            *ngIf="spinner === false">ENTRAR</ion-button>
+
+            <div class="not-user">
+              <p>¿Aún no eres usuario?</p>
+              <p>Crea tu cuenta </p>
+              <a [routerLink]="['/register']">Registrarme</a>
+            </div>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,107 @@
+::ng-deep .modal-add-card {
+  width: 90%;
+  min-width: 90%;
+  @media (min-width: 768px) {
+    width: 70%;
+    min-width: 70%;
+  }
+  mat-dialog-container {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    overflow: hidden;
+  }
+}
+
+.mat-dialog-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--app-secondary);
+  position: relative;
+  h5 {
+    font-weight: 600;
+    margin: 0 auto;
+    font-size: 0.7em;
+  }
+  .btn-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+.select-card {
+  text-align: left;
+  font-size: 1em;
+  color: var(--ion-color-medium);
+}
+.card-brand {
+  font-size: 48px;
+}
+
+.fill-remaining-space {
+  mat-icon {
+    padding-right: 2rem;
+  }
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.card-numbers {
+  display: flex;
+  margin-top: -15px;
+  margin-bottom: 1rem;
+  mat-form-field {
+    margin: 0;
+    padding: 0;
+  }
+
+  input[type="number"] {
+    -webkit-text-security: disc !important;
+  }
+
+  /* Removes Spin Button */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  ion-col {
+    padding-right: 0;
+    padding-left: 0;
+    &:last-of-type {
+      padding-right: 1rem;
+    }
+  }
+}
+::ng-deep {
+  .c_type {
+    .mat-select-value {
+     overflow: visible;
+    }
+  }
+  .c_type_value {
+    position: absolute;
+    top: 0px;
+  }
+}
+
+
+.visa-icon {
+  color: var(--app-secondary);
+  font-size: 50px;
+  top: -25px;
+}
+.mastercard-icon {
+  font-size: 50px;
+  top: -40px
+}
+.amex-icon {
+  color: var(--ion-color-medium);
+  top: -35px;
+  font-size: 64px;
+}
+
+mat-icon {
+  color: var(--ion-color-medium);
+}

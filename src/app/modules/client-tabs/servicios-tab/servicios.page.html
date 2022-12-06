@@ -1,0 +1,51 @@
+<app-page-toolbar-title></app-page-toolbar-title>
+<ion-content>
+  <ion-row style="align-content: center; justify-content: center;">
+    <ion-col size="11" size-md="8">
+      <div class="title-container">
+        <p class="title">Mis Servicios</p>
+      </div>
+
+      <div class="tabs-container">
+        <ion-segment [disabled]="loadingData === true" [(ngModel)]="tab" *ngIf="view === 'proceso'" (ngModelChange)="changeInfo($event)">
+          <ion-segment-button [value]="'proceso'">
+            <ion-label>En Proceso</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="'historico'">
+            <ion-label>Historico</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <ion-col size="12" *ngIf="loadingData === true">
+        <div class="spinner">
+          <b style="color: var(--app-secondary); width: 100%;">Cargando información</b>
+          <br>
+          <ion-spinner color="secondary" name="dots" ></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center ion-no-margin ion-no-padding">
+    <ion-col size="12" size-md="12">
+
+      <ng-container *ngIf="loadingData === false && preSolLoading === false">
+        <ng-container *ngIf="!preSolicitudes || preSolicitudes.length === 0">
+          <div class="empty-container">
+            <ion-icon name="alert-circle"></ion-icon>
+            <p>
+              No hay servicios en curso
+            </p>
+          </div>
+        </ng-container>
+
+        <app-pre-solicitud-card-resume *ngIf="(tab === 'proceso' || tab === 'historico') && (preSolicitudes && preSolicitudes.length > 0)" [preSolicitudes]="preSolicitudes" (republishEmit)="needReload(true, 'proceso')"></app-pre-solicitud-card-resume>
+
+      </ng-container>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+<app-reload-button [ngClass]="{'disable': loadingData}" (reloadPush$)="$event === true ? loadAsistenciasProceso(tab) : false"></app-reload-button>

@@ -1,0 +1,68 @@
+::ng-deep .mat-vertical-stepper-header{
+  pointer-events: none !important;
+}
+
+hr {
+  background-image: linear-gradient(to right, #9c9c9c 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+}
+.google-maps-controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 6px 0 6px;
+}
+.floating-controls {
+  position: absolute;
+  top: -1rem;
+  z-index: 9990;
+  margin: 0;
+  left: 5%;
+  width: 90%;
+}
+.info-window-card {
+  position: absolute;
+  bottom: -4%;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  max-height: 55%;
+  overflow-y: scroll;
+
+  ion-card-header, ion-card-content {
+   padding: 8px;
+  }
+  ion-card-content {
+    padding-top: 1rem;
+    margin-top: 0;
+  }
+
+  .logo-card {
+    height: 30px;
+  }
+
+  .grua_num {
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .operator-container {
+    display: flex;
+    text-align: left;
+    font-size: 12px;
+    p {
+      flex: 0 1 60%;
+      padding-left: 8px;
+      margin: 0;
+      word-break: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-height: 16px;
+      max-height: 32px;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+}

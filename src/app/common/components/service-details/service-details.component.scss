@@ -1,0 +1,55 @@
+.accordion-margin {
+  margin: 1rem;
+
+}
+
+.last-accordion {
+  height: 120px;
+}
+
+.call {
+  position: absolute;
+  top: -15px;
+  right: 0;
+  background: var(--app-blue-turquesa);
+}
+
+.item-quantity {
+  font-size: 1.2rem;
+}
+.item-description {
+  display: flex;
+  align-items: center;
+}
+.item-code {
+  font-size: 1.2em;
+  font-weight: 500;
+  flex: 0 1 50%;
+}
+.item-large-description {
+  margin-top: 10px;
+}
+.balance {
+  display: flex;
+  justify-content: space-between;
+  .total {
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+}
+
+.arribo-buttons {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  right: 0;
+}
+.foto-more-btns {
+  position: absolute;
+  top: 4%;
+  right: 0;
+  mat-icon {
+    font-size: 2.5rem;
+  }
+}

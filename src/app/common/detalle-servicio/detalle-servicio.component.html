@@ -1,0 +1,104 @@
+<ion-card class="app-card ion-no-margin ion-no-padding" style="padding: 1rem;" *ngIf="!solicitud || solicitud == null">
+  <ion-card-title>No hay información para mostrar</ion-card-title>
+</ion-card>
+
+<ng-container *ngIf="solicitud">
+
+  <ion-card class="app-card ion-no-margin ion-no-padding" style="padding: 1rem; margin-top: 2em;">
+    <h3 style="text-align: center;">Alias Vehículo: {{ (solicitud.vehiculo && solicitud.vehiculo.alias) ? solicitud.vehiculo.alias : '--' }}</h3>
+    <p style="text-align: center;"><b>Estatus:</b> {{ (solicitud.status) ? solicitud.status : '--' }}</p>
+    <div class="vehiculo-container">
+      <div class="vehiculo-data">
+        <p>{{ (solicitud.vehiculo && solicitud.vehiculo.tipo) ? solicitud.vehiculo.tipo.name : '--' }}</p>
+        <p class="placas">{{ (solicitud.vehiculo && solicitud.vehiculo.placas) ? solicitud.vehiculo.placas: '--' }}</p>
+        <div class="color-anio">
+          <p>{{ (solicitud.vehiculo && solicitud.vehiculo.color) ? solicitud.vehiculo.color.name : '--' }}</p>
+          <p>{{ (solicitud.vehiculo && solicitud.vehiculo.anio) ? solicitud.vehiculo.anio : '--' }}</p>
+        </div>
+      </div>
+
+      <div class="vehiculo-img">
+        <ion-icon *ngIf="solicitud.vehiculo && solicitud.vehiculo.tipo.icon_name; else altIconImg" src="assets/img/static/tipo-vehiculo/{{solicitud.vehiculo.tipo.icon_name}}"></ion-icon>
+        <ng-template #altIconImg>
+          <ion-icon #altIconImg src="assets/img/static/tipo-vehiculo/sedan.svg"></ion-icon>
+        </ng-template>
+
+      </div>
+    </div>
+    <div>
+      <table class="short-info">
+        <tr class="table-encabezado">
+          <th>Tipo Servicio</th>
+          <th colspan="2" style="text-align: right;">{{ (solicitud && solicitud.servicio) ? solicitud.servicio.name : '--' }}</th>
+        </tr>
+        <tr>
+          <td><b>#</b></td>
+          <td style="text-align: left;">Servicio</td>
+          <td style="text-align: right;">{{ (solicitud && solicitud.name) ? solicitud.name : '--' }}</td>
+        </tr>
+        <tr>
+          <td><ion-icon name="location-sharp" slot="start"></ion-icon></td>
+          <td style="text-align: left;">Se encuentra:</td>
+          <td style="text-align: right;">{{ (solicitud && solicitud.seencuentra) ? solicitud.seencuentra: '--' }}</td>
+        </tr>
+        <tr>
+          <td><ion-icon name="location-sharp" slot="start"></ion-icon></td>
+          <td style="text-align: left;">Se lleva:</td>
+          <td style="text-align: right;"td>{{ (solicitud && solicitud.selleva) ? solicitud.selleva: '--' }}</td>
+        </tr>
+        <tr>
+          <td><ion-icon name="calendar"></ion-icon></td>
+          <td style="text-align: left;">Fecha reg:</td>
+          <td style="text-align: right;">{{ (solicitud && solicitud.fecha_hora_reservacion) ? solicitud.fecha_hora_reservacion : '--' }}</td>
+        </tr>
+        <tr>
+          <td><ion-icon name="cash" style="color: black;"></ion-icon></td>
+          <td style="text-align: left;">Total:</td>
+          <td style="text-align: right;">{{ (solicitud && solicitud.amount_total) ? (solicitud.amount_total | currency) + 'MXN' : '--' }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="short-info">
+    </div>
+    <ng-container *ngIf="checkNeedComprobante(solicitud) === true">
+      <fieldset class="fieldset-photo" style="margin-bottom: 1rem; margin-top: 1rem;">
+        <p>Proporcione su comprobante de pago</p>
+        <app-camera (base64Img)="catchImg($event, 'pago', solicitud)" [needConfirmation]="true"></app-camera>
+        <a (click)="showTransferBank()" class="transfer-link">Ver datos para transferencia</a>
+      </fieldset>
+    </ng-container>
+
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+
+    <ng-container *ngIf="solicitud.operador">
+      <p class="operador-title">Operador asignado</p>
+      <ion-row>
+        <ion-col size="12">
+          <ion-row>
+            <ion-col size="auto">
+              <ion-avatar style="
+              width: 2.2rem;
+              height: auto;
+          ">
+                <img src="assets/img/static/avatar.svg">
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="fill">
+              <div class="operador-data">
+
+                <p class="name">{{ (solicitud.operador && solicitud.operador.employee) ? solicitud.operador.employee.name : '--' }}</p>
+                <p class="grua">{{ (solicitud.grua && solicitud.grua.name) ? solicitud.grua.name : '--' }}</p>
+                <div class="time">
+                  <ion-icon name="stopwatch"></ion-icon> {{ (solicitud && solicitud.tmestimadoarribo) ? solicitud.tmestimadoarribo : '--' }} minutos.
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+    </ng-container>
+  </ion-card>
+</ng-container>
