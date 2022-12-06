@@ -6,8 +6,8 @@
 * Angular 14.2.6
 * Angular Material 14.2.6
 
-### Dependencias de servicios externos
-* Firebase para notificaciones push cuenta: craneapps21@gmail.com
+### Dependencias de servicios externos cuenta: craneapps21@gmail.com
+* Firebase para notificaciones push
 * Google Cloud
     * Directions API
     * Maps Javascript API
