@@ -19,5 +19,5 @@ ionic serve --external
 ionic capacitor run android -l --external
 
 ### Para realizar una compilación a prod
-Android: ionic capacitor build android --prod --release
-IOS: ionic capacitor build ios --prod --release
+* Android: ionic capacitor build android --prod --release
+* IOS: ionic capacitor build ios --prod --release
