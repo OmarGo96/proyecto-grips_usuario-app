@@ -11,3 +11,13 @@
 * Google Cloud
     * Directions API
     * Maps Javascript API
+    
+### Para ejecutar en local
+ionic serve --external
+
+### Para ejecutar con live refresh linkeado a android
+ionic capacitor run android -l --external
+
+### Para realizar una compilación a prod
+Android: ionic capacitor build android --prod --release
+IOS: ionic capacitor build ios --prod --release
